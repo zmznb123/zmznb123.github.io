@@ -77,6 +77,222 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-markdown" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/04/27/markdown/" class="article-date">
+  <time class="dt-published" datetime="2026-04-26T16:00:00.000Z" itemprop="datePublished">2026-04-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2026/04/27/markdown/">Markdown 语法基础</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一、标题"><a href="#一、标题" class="headerlink" title="一、标题"></a>一、标题</h2><p>用 <code>#</code> 表示标题，<code>#</code> 数量代表标题级别，最多支持 6 级：</p>
+<p>markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 一级标题</span><br><span class="line">## 二级标题</span><br><span class="line">### 三级标题</span><br><span class="line">#### 四级标题</span><br><span class="line">##### 五级标题</span><br><span class="line">###### 六级标题</span><br></pre></td></tr></table></figure>
+
+<p>效果：</p>
+<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6><hr>
+<h2 id="二、文本格式"><a href="#二、文本格式" class="headerlink" title="二、文本格式"></a>二、文本格式</h2><p>表格</p>
+<table>
+<thead>
+<tr>
+<th>效果</th>
+<th>语法</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>加粗</td>
+<td><code>**内容**</code> 或 <code>__内容__</code></td>
+<td><strong>加粗文本</strong></td>
+</tr>
+<tr>
+<td>斜体</td>
+<td><code>*内容*</code> 或 <code>_内容_</code></td>
+<td><em>斜体文本</em></td>
+</tr>
+<tr>
+<td>加粗 + 斜体</td>
+<td><code>***内容***</code></td>
+<td><em><strong>加粗斜体</strong></em></td>
+</tr>
+<tr>
+<td>删除线</td>
+<td><code>~~内容~~</code></td>
+<td><del>删除线文本</del></td>
+</tr>
+<tr>
+<td>行内代码</td>
+<td><code>内容</code></td>
+<td><code>行内代码</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="三、列表"><a href="#三、列表" class="headerlink" title="三、列表"></a>三、列表</h2><h3 id="1-无序列表"><a href="#1-无序列表" class="headerlink" title="1. 无序列表"></a>1. 无序列表</h3><p>用 <code>-</code> <code>*</code> <code>+</code> 任意一种都可以，后面加空格：</p>
+<p>markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 苹果</span><br><span class="line">- 香蕉</span><br><span class="line">- 橙子</span><br></pre></td></tr></table></figure>
+
+<p>效果：</p>
+<ul>
+<li>苹果</li>
+<li>香蕉</li>
+<li>橙子</li>
+</ul>
+<h3 id="2-有序列表"><a href="#2-有序列表" class="headerlink" title="2. 有序列表"></a>2. 有序列表</h3><p>用 <code>数字.</code> 表示，后面加空格，数字不影响排序（推荐按顺序写）：</p>
+<p>markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 起床</span><br><span class="line">2. 洗漱</span><br><span class="line">3. 吃早餐</span><br></pre></td></tr></table></figure>
+
+<p>效果：</p>
+<ol>
+<li>起床</li>
+<li>洗漱</li>
+<li>吃早餐</li>
+</ol>
+<h3 id="3-嵌套列表"><a href="#3-嵌套列表" class="headerlink" title="3. 嵌套列表"></a>3. 嵌套列表</h3><p>子列表前面加 2-4 个空格：</p>
+<p>markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- 水果</span><br><span class="line">  - 苹果</span><br><span class="line">  - 香蕉</span><br><span class="line">- 蔬菜</span><br><span class="line">  1. 白菜</span><br><span class="line">  2. 萝卜</span><br></pre></td></tr></table></figure>
+
+<p>效果：</p>
+<ul>
+<li><p>水果</p>
+<ul>
+<li>苹果</li>
+<li>香蕉</li>
+</ul>
+</li>
+<li><p>蔬菜</p>
+<ol>
+<li>白菜</li>
+<li>萝卜</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="四、链接与图片"><a href="#四、链接与图片" class="headerlink" title="四、链接与图片"></a>四、链接与图片</h2><h3 id="1-超链接"><a href="#1-超链接" class="headerlink" title="1. 超链接"></a>1. 超链接</h3><p>格式：<code>[显示文本](链接地址 &quot;可选标题&quot;)</code></p>
+<p>markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[百度](https://www.baidu.com &quot;百度首页&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>效果：<a target="_blank" rel="noopener" href="https://www.baidu.com/">百度</a></p>
+<h3 id="2-图片"><a href="#2-图片" class="headerlink" title="2. 图片"></a>2. 图片</h3><p>格式：<code>![图片描述](图片地址 &quot;可选标题&quot;)</code></p>
+<p>markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![Markdown Logo](https://markdown.com.cn/hero.png &quot;Markdown&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>效果（示意）：</p>
+<p><img src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27400%27%20height=%27256%27/%3e" alt="img"><img src="https://markdown.com.cn/hero.png" alt="image"></p>
+<hr>
+<h2 id="五、引用"><a href="#五、引用" class="headerlink" title="五、引用"></a>五、引用</h2><p>用 <code>&gt;</code> 表示引用，多级引用可以叠加 <code>&gt;&gt;</code>：</p>
+<p>markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; 这是一级引用</span><br><span class="line">&gt;&gt; 这是二级引用</span><br><span class="line">&gt; 引用里也可以用**加粗**、`代码` 等格式</span><br></pre></td></tr></table></figure>
+
+<p>效果：</p>
+<blockquote>
+<p>这是一级引用</p>
+<blockquote>
+<p>这是二级引用</p>
+<p>引用里也可以用<strong>加粗</strong>、<code>代码</code> 等格式</p>
+</blockquote>
+</blockquote>
+<hr>
+<h2 id="六、代码块"><a href="#六、代码块" class="headerlink" title="六、代码块"></a>六、代码块</h2><h3 id="1-行内代码"><a href="#1-行内代码" class="headerlink" title="1. 行内代码"></a>1. 行内代码</h3><p>用一对反引号 &#96;&#96;&#96; 包裹：</p>
+<p>markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这是 `行内代码` 示例</span><br></pre></td></tr></table></figure>
+
+<p>效果：这是 <code>行内代码</code> 示例</p>
+<h3 id="2-代码块"><a href="#2-代码块" class="headerlink" title="2. 代码块"></a>2. 代码块</h3><p>用三个反引号 &#96;&#96;&#96;&#96;&#96; 包裹，开头可以指定语言（如 <code>python</code> <code>sql</code>），实现语法高亮：</p>
+<p>markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">```sql</span><br><span class="line">SELECT * FROM users WHERE username = &#x27;admin&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>plaintext</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">效果：</span><br><span class="line">```sql</span><br><span class="line">SELECT * FROM users WHERE username = &#x27;admin&#x27;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="七、表格"><a href="#七、表格" class="headerlink" title="七、表格"></a>七、表格</h2><p>用 <code>|</code> 分隔列，<code>-</code> 分隔表头和内容，<code>:</code> 控制对齐方式：</p>
+<p>markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">| 姓名 | 年龄 | 性别 |</span><br><span class="line">| :--- | :--: | ---: |</span><br><span class="line">| 张三 |  18  | 男   |</span><br><span class="line">| 李四 |  20  | 女   |</span><br></pre></td></tr></table></figure>
+
+<p>效果：</p>
+<p>表格</p>
+<table>
+<thead>
+<tr>
+<th>姓名</th>
+<th>年龄</th>
+<th>性别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>张三</td>
+<td>18</td>
+<td>男</td>
+</tr>
+<tr>
+<td>李四</td>
+<td>20</td>
+<td>女</td>
+</tr>
+</tbody></table>
+<ul>
+<li><code>:---</code>：左对齐</li>
+<li><code>:--:</code>：居中</li>
+<li><code>---:</code>：右对齐</li>
+</ul>
+<hr>
+<h2 id="八、分割线"><a href="#八、分割线" class="headerlink" title="八、分割线"></a>八、分割线</h2><p>用三个及以上的 <code>-</code> <code>*</code> <code>_</code> 表示，前后最好空一行：</p>
+<p>markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">***</span><br><span class="line">___</span><br></pre></td></tr></table></figure>
+
+<p>效果（三种效果一致）：</p>
+<hr>
+<hr>
+<hr>
+<hr>
+<h2 id="九、转义字符"><a href="#九、转义字符" class="headerlink" title="九、转义字符"></a>九、转义字符</h2><p>如果想显示 Markdown 语法符号本身（比如 <code>*</code> <code>#</code> <code>[]</code>），可以在前面加反斜杠 <code>\</code> 转义：</p>
+<p>markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\* 这不是斜体，而是显示星号</span><br><span class="line">\# 这不是标题，而是显示井号</span><br></pre></td></tr></table></figure>
+
+<p>效果：</p>
+<p>* 这不是斜体，而是显示星号</p>
+<p># 这不是标题，而是显示井号</p>
+<h1 id="十、内容加粗"><a href="#十、内容加粗" class="headerlink" title="十、内容加粗"></a>十、内容加粗</h1><p>\*** 内容***\</p>
+<ul>
+<li>三个星号再加三个星号；</li>
+<li><em><strong>效果</strong></em></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2026/04/27/markdown/" data-id="cuid8WVxN2GzH72Tit_KS_Pc6" data-title="Markdown 语法基础" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-mysql" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2026/04/12/mysql/" class="article-date">
@@ -164,11 +380,20 @@
 <p>SELECT 字段 FROM 表名 GROUP BY 字段;</p>
 <p><em><strong>内连接</strong></em></p>
 <p>SELECT * FROM 表1<br>JOIN 表2 ON 表1.id &#x3D; 表2.id;</p>
+<p>– 插入数据（加了email字段）<br>INSERT INTO users (username,password,email)<br>VALUES (‘newuser’,’123456’,‘<a href="mailto:&#116;&#101;&#115;&#x74;&#x40;&#x71;&#113;&#46;&#99;&#x6f;&#x6d;">test@qq.com</a>‘);</p>
+<ul>
+<li><p>查询数据<br>SELECT * FROM users WHERE username&#x3D;’admin’;</p>
+</li>
+<li><p>修改数据<br>UPDATE users SET password&#x3D;’newpass’ WHERE username&#x3D;’admin’;</p>
+</li>
+<li><p>删除数据<br>DELETE FROM users WHERE username&#x3D;’test’;</p>
+</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/04/12/mysql/" data-id="cuidWyP5RA4RI_nH08lSjlkw7" data-title="mysql" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2026/04/12/mysql/" data-id="cuidAdpzhJfo7zXfEUUxt_fTR" data-title="mysql" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -221,7 +446,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/04/01/hello-world/" data-id="cuidfS9--VCOwbhhk02LwKFra" data-title="Hello World" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2026/04/01/hello-world/" data-id="cuidsPq-zrkZz0T8bAHrZjtZV" data-title="Hello World" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -433,7 +658,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/02/01/linxu/" data-id="cuidvCz_z2BbsbAzKIJ2K_2Bu" data-title="Linux基础操作" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2025/02/01/linxu/" data-id="cuidUcUSNGnt06SsgiwG1llXJ" data-title="Linux基础操作" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -457,7 +682,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/">知识点</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/">知识点</a></li></ul>
     </div>
   </div>
 
@@ -467,7 +692,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="tag">学习记录</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="tag">学习记录</a></li></ul>
     </div>
   </div>
 
@@ -477,7 +702,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" style="font-size: 10px;">学习记录</a>
+      <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" style="font-size: 10px;">学习记录</a>
     </div>
   </div>
 
@@ -497,6 +722,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2026/04/27/markdown/">Markdown 语法基础</a>
+          </li>
         
           <li>
             <a href="/2026/04/12/mysql/">mysql</a>

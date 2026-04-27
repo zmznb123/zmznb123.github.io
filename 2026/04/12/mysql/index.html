@@ -14,7 +14,7 @@
 <meta property="og:description" content="数据类型：数值类型  INT(年龄，id，数量) TINYINT（状态值（0&#x2F;1），性别） BIGINT（超级大id） DECLMAL（金额，价格）（10,2）【总共十位数保留两位小数】  字符串类型  varchar（N）（手机号，姓名，地址） char(N)(固定长度，不够的补空格，短字符串（如身份证号18位，定长的编码）) text（长文本，文章内容，评论等）  时间类型  dat">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-04-12T11:23:13.000Z">
-<meta property="article:modified_time" content="2026-04-16T14:47:25.046Z">
+<meta property="article:modified_time" content="2026-04-27T12:35:02.404Z">
 <meta property="article:author" content="zmdclj">
 <meta property="article:tag" content="学习记录">
 <meta name="twitter:card" content="summary">
@@ -165,11 +165,20 @@
 <p>SELECT 字段 FROM 表名 GROUP BY 字段;</p>
 <p><em><strong>内连接</strong></em></p>
 <p>SELECT * FROM 表1<br>JOIN 表2 ON 表1.id &#x3D; 表2.id;</p>
+<p>– 插入数据（加了email字段）<br>INSERT INTO users (username,password,email)<br>VALUES (‘newuser’,’123456’,‘<a href="mailto:&#116;&#101;&#115;&#x74;&#x40;&#x71;&#113;&#46;&#99;&#x6f;&#x6d;">test@qq.com</a>‘);</p>
+<ul>
+<li><p>查询数据<br>SELECT * FROM users WHERE username&#x3D;’admin’;</p>
+</li>
+<li><p>修改数据<br>UPDATE users SET password&#x3D;’newpass’ WHERE username&#x3D;’admin’;</p>
+</li>
+<li><p>删除数据<br>DELETE FROM users WHERE username&#x3D;’test’;</p>
+</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/04/12/mysql/" data-id="cuidWyP5RA4RI_nH08lSjlkw7" data-title="mysql" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2026/04/12/mysql/" data-id="cuidAdpzhJfo7zXfEUUxt_fTR" data-title="mysql" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -180,6 +189,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2026/04/27/markdown/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          Markdown 语法基础
+        
+      </div>
+    </a>
   
   
     <a href="/2026/04/01/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
@@ -201,7 +219,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/">知识点</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/">知识点</a></li></ul>
     </div>
   </div>
 
@@ -211,7 +229,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="tag">学习记录</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="tag">学习记录</a></li></ul>
     </div>
   </div>
 
@@ -221,7 +239,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" style="font-size: 10px;">学习记录</a>
+      <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" style="font-size: 10px;">学习记录</a>
     </div>
   </div>
 
@@ -241,6 +259,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2026/04/27/markdown/">Markdown 语法基础</a>
+          </li>
         
           <li>
             <a href="/2026/04/12/mysql/">mysql</a>
