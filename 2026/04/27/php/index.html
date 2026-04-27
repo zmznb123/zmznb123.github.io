@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>php 语法基础 | 钟民的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一、PHP 基础入门1. 基本语法 PHP 代码以 &lt;?php 开始，?&gt; 结束，可嵌入 HTML 中 语句必须以分号 ; 结尾 单行注释：&#x2F;&#x2F; 注释内容 多行注释：&#x2F;* 注释内容 *&#x2F;  php 运行 1234&lt;?php&#x2F;&#x2F; 输出内容echo &quot;Hello PHP!&quot;;?&gt;  2. 输出语句 echo：最常用，输出一个或多个字符串，无返回值 print">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php 语法基础">
+<meta property="og:url" content="http://example.com/2026/04/27/php/index.html">
+<meta property="og:site_name" content="钟民的个人博客">
+<meta property="og:description" content="一、PHP 基础入门1. 基本语法 PHP 代码以 &lt;?php 开始，?&gt; 结束，可嵌入 HTML 中 语句必须以分号 ; 结尾 单行注释：&#x2F;&#x2F; 注释内容 多行注释：&#x2F;* 注释内容 *&#x2F;  php 运行 1234&lt;?php&#x2F;&#x2F; 输出内容echo &quot;Hello PHP!&quot;;?&gt;  2. 输出语句 echo：最常用，输出一个或多个字符串，无返回值 print">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-04-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-27T13:06:02.946Z">
+<meta property="article:author" content="zmdclj">
+<meta property="article:tag" content="php">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="钟民的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">钟民的个人博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">网络安全技术的分享与日常</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-php" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/04/27/php/" class="article-date">
+  <time class="dt-published" datetime="2026-04-26T16:00:00.000Z" itemprop="datePublished">2026-04-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      php 语法基础
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一、PHP-基础入门"><a href="#一、PHP-基础入门" class="headerlink" title="一、PHP 基础入门"></a>一、PHP 基础入门</h2><h3 id="1-基本语法"><a href="#1-基本语法" class="headerlink" title="1. 基本语法"></a>1. 基本语法</h3><ul>
+<li>PHP 代码以 <code>&lt;?php</code> 开始，<code>?&gt;</code> 结束，可嵌入 HTML 中</li>
+<li>语句必须以<strong>分号 <code>;</code></strong> 结尾</li>
+<li>单行注释：<code>// 注释内容</code></li>
+<li>多行注释：<code>/* 注释内容 */</code></li>
+</ul>
+<p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">// 输出内容</span><br><span class="line">echo &quot;Hello PHP!&quot;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-输出语句"><a href="#2-输出语句" class="headerlink" title="2. 输出语句"></a>2. 输出语句</h3><ul>
+<li><code>echo</code>：最常用，输出一个或多个字符串，<strong>无返回值</strong></li>
+<li><code>print</code>：输出一个字符串，有返回值（效率低于 echo）</li>
+<li><code>print_r()</code>：打印变量信息（适合数组 &#x2F; 对象）</li>
+<li><code>var_dump()</code>：打印变量类型 + 值（调试专用）</li>
+</ul>
+<h2 id="二、变量与数据类型"><a href="#二、变量与数据类型" class="headerlink" title="二、变量与数据类型"></a>二、变量与数据类型</h2><h3 id="1-变量规则"><a href="#1-变量规则" class="headerlink" title="1. 变量规则"></a>1. 变量规则</h3><ul>
+<li>以 <code>$</code> 符号开头，如 <code>$name</code></li>
+<li>区分大小写，不能以数字开头</li>
+<li>弱类型语言：<strong>无需声明类型</strong>，自动转换</li>
+</ul>
+<h3 id="2-8-种数据类型"><a href="#2-8-种数据类型" class="headerlink" title="2. 8 种数据类型"></a>2. 8 种数据类型</h3><h4 id="标量类型（4-种）"><a href="#标量类型（4-种）" class="headerlink" title="标量类型（4 种）"></a>标量类型（4 种）</h4><ol>
+<li><strong>字符串</strong>：<code>$str = &quot;abc&quot;;</code></li>
+<li><strong>整型</strong>：<code>$num = 100;</code></li>
+<li><strong>浮点型</strong>：<code>$float = 3.14;</code></li>
+<li><strong>布尔型</strong>：<code>$bool = true / false;</code></li>
+</ol>
+<h4 id="复合类型（2-种）"><a href="#复合类型（2-种）" class="headerlink" title="复合类型（2 种）"></a>复合类型（2 种）</h4><ol>
+<li><strong>数组</strong>：<code>$arr = [1,2,3];</code></li>
+<li><strong>对象</strong>：面向对象使用</li>
+</ol>
+<h4 id="特殊类型（2-种）"><a href="#特殊类型（2-种）" class="headerlink" title="特殊类型（2 种）"></a>特殊类型（2 种）</h4><ol>
+<li><strong>NULL</strong>：空值</li>
+<li><strong>资源</strong>：文件、数据库连接等</li>
+</ol>
+<h3 id="3-常量"><a href="#3-常量" class="headerlink" title="3. 常量"></a>3. 常量</h3><ul>
+<li>定义后<strong>不可修改</strong>，全局有效</li>
+</ul>
+<p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">define(&quot;NAME&quot;, &quot;PHP学习&quot;);</span><br><span class="line">echo NAME;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、运算符"><a href="#三、运算符" class="headerlink" title="三、运算符"></a>三、运算符</h2><h3 id="1-算术运算符"><a href="#1-算术运算符" class="headerlink" title="1. 算术运算符"></a>1. 算术运算符</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ - * / % ++ --</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-比较运算符"><a href="#2-比较运算符" class="headerlink" title="2. 比较运算符"></a>2. 比较运算符</h3><p><code>== 等于</code>、<code>=== 全等于（值+类型都相同）</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!= &gt; &lt; &gt;= &lt;=</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-逻辑运算符"><a href="#3-逻辑运算符" class="headerlink" title="3. 逻辑运算符"></a>3. 逻辑运算符</h3><p><code>&amp;&amp; 与</code>、<code>|| 或</code>、<code>! 非</code></p>
+<h3 id="4-字符串运算符"><a href="#4-字符串运算符" class="headerlink" title="4. 字符串运算符"></a>4. 字符串运算符</h3><p><code>.</code> 拼接字符串</p>
+<p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;Hello&quot; . &quot; PHP&quot;; // 输出 Hello PHP</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、流程控制"><a href="#四、流程控制" class="headerlink" title="四、流程控制"></a>四、流程控制</h2><h3 id="1-条件判断"><a href="#1-条件判断" class="headerlink" title="1. 条件判断"></a>1. 条件判断</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// if-else</span><br><span class="line">if($score &gt;= 60)&#123;</span><br><span class="line">  echo &quot;及格&quot;;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">  echo &quot;不及格&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// switch</span><br><span class="line">switch($num)&#123;</span><br><span class="line">  case 1: echo &quot;一&quot;; break;</span><br><span class="line">  default: echo &quot;其他&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-循环结构"><a href="#2-循环结构" class="headerlink" title="2. 循环结构"></a>2. 循环结构</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// for 循环</span><br><span class="line">for($i=0; $i&lt;5; $i++)&#123; echo $i; &#125;</span><br><span class="line"></span><br><span class="line">// while 循环</span><br><span class="line">$i=0;</span><br><span class="line">while($i&lt;5)&#123; $i++; &#125;</span><br><span class="line"></span><br><span class="line">// foreach（遍历数组专用）</span><br><span class="line">foreach($arr as $val)&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、数组"><a href="#五、数组" class="headerlink" title="五、数组"></a>五、数组</h2><h3 id="1-数组分类"><a href="#1-数组分类" class="headerlink" title="1. 数组分类"></a>1. 数组分类</h3><ol>
+<li><strong>索引数组</strong>：下标为数字</li>
+</ol>
+<p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$arr = [10, 20, 30];</span><br><span class="line">echo $arr[0]; // 10</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><strong>关联数组</strong>：自定义键名</li>
+</ol>
+<p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$user = [&quot;name&quot;=&gt;&quot;张三&quot;,&quot;age&quot;=&gt;20];</span><br><span class="line">echo $user[&quot;name&quot;];</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-常用数组函数"><a href="#2-常用数组函数" class="headerlink" title="2. 常用数组函数"></a>2. 常用数组函数</h3><ul>
+<li><code>count()</code>：获取数组长度</li>
+<li><code>array_push()</code>：尾部添加元素</li>
+<li><code>array_pop()</code>：删除尾部元素</li>
+<li><code>in_array()</code>：判断值是否在数组中</li>
+<li><code>implode()</code>：数组转字符串</li>
+<li><code>explode()</code>：字符串转数组</li>
+</ul>
+<h2 id="六、函数"><a href="#六、函数" class="headerlink" title="六、函数"></a>六、函数</h2><h3 id="1-自定义函数"><a href="#1-自定义函数" class="headerlink" title="1. 自定义函数"></a>1. 自定义函数</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 定义</span><br><span class="line">function add($a, $b)&#123;</span><br><span class="line">  return $a + $b;</span><br><span class="line">&#125;</span><br><span class="line">// 调用</span><br><span class="line">echo add(1,2);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-常用系统函数"><a href="#2-常用系统函数" class="headerlink" title="2. 常用系统函数"></a>2. 常用系统函数</h3><ul>
+<li>字符串：<code>strlen()</code>、<code>trim()</code>、<code>str_replace()</code></li>
+<li>时间：<code>time()</code>、<code>date(&quot;Y-m-d H:i:s&quot;)</code></li>
+<li>文件：<code>file_get_contents()</code>、<code>file_put_contents()</code></li>
+</ul>
+<h2 id="七、表单与超全局变量"><a href="#七、表单与超全局变量" class="headerlink" title="七、表单与超全局变量"></a>七、表单与超全局变量</h2><h3 id="1-接收表单数据"><a href="#1-接收表单数据" class="headerlink" title="1. 接收表单数据"></a>1. 接收表单数据</h3><ul>
+<li><code>$_GET</code>：接收 GET 方式提交的数据</li>
+<li><code>$_POST</code>：接收 POST 方式提交的数据</li>
+<li><code>$_REQUEST</code>：同时接收 GET&#x2F;POST</li>
+</ul>
+<p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$name = $_POST[&quot;username&quot;];</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-其他超全局变量"><a href="#2-其他超全局变量" class="headerlink" title="2. 其他超全局变量"></a>2. 其他超全局变量</h3><ul>
+<li><code>$_SERVER</code>：服务器信息</li>
+<li><code>$_SESSION</code>：会话数据</li>
+<li><code>$_COOKIE</code>：Cookie 数据</li>
+</ul>
+<h2 id="八、会话与-Cookie"><a href="#八、会话与-Cookie" class="headerlink" title="八、会话与 Cookie"></a>八、会话与 Cookie</h2><h3 id="1-Session（服务器存储）"><a href="#1-Session（服务器存储）" class="headerlink" title="1. Session（服务器存储）"></a>1. Session（服务器存储）</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">session_start(); // 必须开头</span><br><span class="line">$_SESSION[&quot;user&quot;] = &quot;张三&quot;; // 赋值</span><br><span class="line">unset($_SESSION[&quot;user&quot;]); // 删除</span><br><span class="line">session_destroy(); // 销毁会话</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Cookie（客户端存储）"><a href="#2-Cookie（客户端存储）" class="headerlink" title="2. Cookie（客户端存储）"></a>2. Cookie（客户端存储）</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setcookie(&quot;name&quot;,&quot;张三&quot;,time()+3600); // 设置</span><br><span class="line">echo $_COOKIE[&quot;name&quot;]; // 获取</span><br><span class="line">setcookie(&quot;name&quot;,&quot;&quot;,time()-1); // 删除</span><br></pre></td></tr></table></figure>
+
+<h2 id="九、MySQL-数据库操作（MySQLi）"><a href="#九、MySQL-数据库操作（MySQLi）" class="headerlink" title="九、MySQL 数据库操作（MySQLi）"></a>九、MySQL 数据库操作（MySQLi）</h2><h3 id="1-连接数据库"><a href="#1-连接数据库" class="headerlink" title="1. 连接数据库"></a>1. 连接数据库</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$conn = mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;密码&quot;,&quot;库名&quot;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-执行-SQL"><a href="#2-执行-SQL" class="headerlink" title="2. 执行 SQL"></a>2. 执行 SQL</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 查询</span><br><span class="line">$sql = &quot;SELECT * FROM user&quot;;</span><br><span class="line">$result = mysqli_query($conn, $sql);</span><br><span class="line">while($row = mysqli_fetch_assoc($result))&#123;</span><br><span class="line">  print_r($row);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 增删改</span><br><span class="line">$sql = &quot;INSERT INTO user(name) VALUES(&#x27;张三&#x27;)&quot;;</span><br><span class="line">mysqli_query($conn, $sql);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-关闭连接"><a href="#3-关闭连接" class="headerlink" title="3. 关闭连接"></a>3. 关闭连接</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqli_close($conn);</span><br></pre></td></tr></table></figure>
+
+<h2 id="十、文件操作"><a href="#十、文件操作" class="headerlink" title="十、文件操作"></a>十、文件操作</h2><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 读取文件</span><br><span class="line">$content = file_get_contents(&quot;test.txt&quot;);</span><br><span class="line"></span><br><span class="line">// 写入文件</span><br><span class="line">file_put_contents(&quot;test.txt&quot;,&quot;内容&quot;);</span><br><span class="line"></span><br><span class="line">// 打开/关闭</span><br><span class="line">$fp = fopen(&quot;test.txt&quot;,&quot;r&quot;);</span><br><span class="line">fclose($fp);</span><br></pre></td></tr></table></figure>
+
+<h2 id="十一、面向对象（OOP）"><a href="#十一、面向对象（OOP）" class="headerlink" title="十一、面向对象（OOP）"></a>十一、面向对象（OOP）</h2><h3 id="1-类与对象"><a href="#1-类与对象" class="headerlink" title="1. 类与对象"></a>1. 类与对象</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Person&#123;</span><br><span class="line">  public $name;</span><br><span class="line">  function say()&#123; echo &quot;说话&quot;; &#125;</span><br><span class="line">&#125;</span><br><span class="line">$p = new Person();</span><br><span class="line">$p-&gt;name = &quot;张三&quot;;</span><br><span class="line">$p-&gt;say();</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-关键字"><a href="#2-关键字" class="headerlink" title="2. 关键字"></a>2. 关键字</h3><ul>
+<li><code>public</code>：公共权限</li>
+<li><code>private</code>：私有权限</li>
+<li><code>protected</code>：受保护权限</li>
+<li><code>$this</code>：代表当前对象</li>
+<li><code>new</code>：实例化对象</li>
+</ul>
+<h2 id="十二、安全与常用要点"><a href="#十二、安全与常用要点" class="headerlink" title="十二、安全与常用要点"></a>十二、安全与常用要点</h2><ol>
+<li><strong>防 SQL 注入</strong>：使用预处理语句</li>
+<li><strong>防 XSS</strong>：输出用 <code>htmlspecialchars()</code></li>
+<li><strong>文件上传</strong>：校验类型、大小、重命名</li>
+<li><strong>错误处理</strong>：<code>try-catch</code> 捕获异常</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2026/04/27/php/" data-id="cuidFTRrY85y6dVXyvg3hgB_m" data-title="php 语法基础" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2026/04/27/markdown/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Markdown 语法基础</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/">知识点</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="tag">学习记录</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" style="font-size: 10px;">学习记录</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">四月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/04/27/php/">php 语法基础</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/27/markdown/">Markdown 语法基础</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/12/mysql/">mysql</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/01/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2025/02/01/linxu/">Linux基础操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 zmdclj<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
