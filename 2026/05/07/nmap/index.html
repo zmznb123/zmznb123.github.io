@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>钟民的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="title: nmapdate: 2026 5月7日tags: [工具的使用] Nmap Linux 常用命令合集（直接复制能用）一、基础扫描bash 运行 1234567891011# 1. 单IP默认端口扫描nmap 192.168.1.1# 2. 扫描多个IPnmap 192.168.1.1 192.168.1.2# 3. 扫描网段nmap 192.168.1.0&#x2F;24# 4. 扫描IP范围">
+<meta property="og:type" content="article">
+<meta property="og:title" content="钟民的个人博客">
+<meta property="og:url" content="http://example.com/2026/05/07/nmap/index.html">
+<meta property="og:site_name" content="钟民的个人博客">
+<meta property="og:description" content="title: nmapdate: 2026 5月7日tags: [工具的使用] Nmap Linux 常用命令合集（直接复制能用）一、基础扫描bash 运行 1234567891011# 1. 单IP默认端口扫描nmap 192.168.1.1# 2. 扫描多个IPnmap 192.168.1.1 192.168.1.2# 3. 扫描网段nmap 192.168.1.0&#x2F;24# 4. 扫描IP范围">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-07T14:05:09.135Z">
+<meta property="article:modified_time" content="2026-05-07T14:07:38.087Z">
+<meta property="article:author" content="zmdclj">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="钟民的个人博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">钟民的个人博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">网络安全技术的分享与日常</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-nmap" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/05/07/nmap/" class="article-date">
+  <time class="dt-published" datetime="2026-05-07T14:05:09.135Z" itemprop="datePublished">2026-05-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>title: nmap<br>date: 2026 5月7日<br>tags: [工具的使用]</p>
+<h1 id="Nmap-Linux-常用命令合集（直接复制能用）"><a href="#Nmap-Linux-常用命令合集（直接复制能用）" class="headerlink" title="Nmap Linux 常用命令合集（直接复制能用）"></a>Nmap Linux 常用命令合集（直接复制能用）</h1><h2 id="一、基础扫描"><a href="#一、基础扫描" class="headerlink" title="一、基础扫描"></a>一、基础扫描</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 1. 单IP默认端口扫描</span><br><span class="line">nmap 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 2. 扫描多个IP</span><br><span class="line">nmap 192.168.1.1 192.168.1.2</span><br><span class="line"></span><br><span class="line"># 3. 扫描网段</span><br><span class="line">nmap 192.168.1.0/24</span><br><span class="line"></span><br><span class="line"># 4. 扫描IP范围</span><br><span class="line">nmap 192.168.1.1-50</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、端口指定扫描"><a href="#二、端口指定扫描" class="headerlink" title="二、端口指定扫描"></a>二、端口指定扫描</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 扫描单个端口</span><br><span class="line">nmap -p 80 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 扫描多个端口</span><br><span class="line">nmap -p 80,22,3306 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 扫描端口范围</span><br><span class="line">nmap -p 1-1000 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 扫描所有端口 1-65535</span><br><span class="line">nmap -p- 192.168.1.1</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、常用参数（渗透必备）"><a href="#三、常用参数（渗透必备）" class="headerlink" title="三、常用参数（渗透必备）"></a>三、常用参数（渗透必备）</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 1. 详细扫描过程</span><br><span class="line">nmap -v 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 2. 路由跟踪+扫描</span><br><span class="line">nmap -traceroute 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 3. 系统版本、服务版本探测</span><br><span class="line">nmap -sV 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 4. 操作系统探测</span><br><span class="line">nmap -O 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 5. 隐藏扫描（半开扫描，不完成三次握手）</span><br><span class="line">nmap -sS 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 6. 全面扫描（版本+系统+脚本）</span><br><span class="line">nmap -A 192.168.1.1</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、主机存活扫描（只看在线主机）"><a href="#四、主机存活扫描（只看在线主机）" class="headerlink" title="四、主机存活扫描（只看在线主机）"></a>四、主机存活扫描（只看在线主机）</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 仅ping扫描，不扫端口</span><br><span class="line">nmap -sn 192.168.1.0/24</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、绕过防火墙-快速扫描"><a href="#五、绕过防火墙-快速扫描" class="headerlink" title="五、绕过防火墙 &#x2F; 快速扫描"></a>五、绕过防火墙 &#x2F; 快速扫描</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 快速扫描</span><br><span class="line">nmap -T4 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 超强激进扫描（速度最快）</span><br><span class="line">nmap -T5 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 随机伪装MAC、发包绕过简单防护</span><br><span class="line">nmap -D 诱饵IP 目标IP</span><br></pre></td></tr></table></figure>
+
+<h2 id="六、脚本扫描（漏洞、弱口令等）"><a href="#六、脚本扫描（漏洞、弱口令等）" class="headerlink" title="六、脚本扫描（漏洞、弱口令等）"></a>六、脚本扫描（漏洞、弱口令等）</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 使用默认脚本扫描</span><br><span class="line">nmap -sC 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 扫描常见漏洞</span><br><span class="line">nmap --script vuln 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 扫描FTP弱口令</span><br><span class="line">nmap --script ftp-brute 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 扫描SSH弱口令</span><br><span class="line">nmap --script ssh-brute 192.168.1.1</span><br></pre></td></tr></table></figure>
+
+<h2 id="七、结果保存"><a href="#七、结果保存" class="headerlink" title="七、结果保存"></a>七、结果保存</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 普通文本保存</span><br><span class="line">nmap 192.168.1.1 -oN result.txt</span><br><span class="line"></span><br><span class="line"># 保存为xml（可导入其他工具）</span><br><span class="line">nmap 192.168.1.1 -oX result.xml</span><br></pre></td></tr></table></figure>
+
+<h2 id="八、常用组合命令（实战常用）"><a href="#八、常用组合命令（实战常用）" class="headerlink" title="八、常用组合命令（实战常用）"></a>八、常用组合命令（实战常用）</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 网段存活+端口+版本全扫</span><br><span class="line">nmap -sn -sV 192.168.1.0/24</span><br><span class="line"></span><br><span class="line"># 全端口+版本+系统+详细信息</span><br><span class="line">nmap -p- -sV -O -v 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 漏洞一键扫描</span><br><span class="line">nmap -T4 --script vuln 192.168.1.1</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2026/05/07/nmap/" data-id="cuidhJ61ZGeLv0anq1dW-dBxu" data-title="" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2026/04/28/mysql%E6%B3%A8%E5%85%A5/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/">知识点</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="tag">学习记录</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" style="font-size: 10px;">学习记录</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">五月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">四月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/05/07/nmap/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/28/mysql%E6%B3%A8%E5%85%A5/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/28/xff%E6%B3%A8%E5%85%A5/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/27/markdown/">Markdown 语法基础</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/27/php/">php 语法基础</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 zmdclj<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

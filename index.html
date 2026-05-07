@@ -77,6 +77,65 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-nmap" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/05/07/nmap/" class="article-date">
+  <time class="dt-published" datetime="2026-05-07T14:05:09.135Z" itemprop="datePublished">2026-05-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>title: nmap<br>date: 2026 5月7日<br>tags: [工具的使用]</p>
+<h1 id="Nmap-Linux-常用命令合集（直接复制能用）"><a href="#Nmap-Linux-常用命令合集（直接复制能用）" class="headerlink" title="Nmap Linux 常用命令合集（直接复制能用）"></a>Nmap Linux 常用命令合集（直接复制能用）</h1><h2 id="一、基础扫描"><a href="#一、基础扫描" class="headerlink" title="一、基础扫描"></a>一、基础扫描</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 1. 单IP默认端口扫描</span><br><span class="line">nmap 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 2. 扫描多个IP</span><br><span class="line">nmap 192.168.1.1 192.168.1.2</span><br><span class="line"></span><br><span class="line"># 3. 扫描网段</span><br><span class="line">nmap 192.168.1.0/24</span><br><span class="line"></span><br><span class="line"># 4. 扫描IP范围</span><br><span class="line">nmap 192.168.1.1-50</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、端口指定扫描"><a href="#二、端口指定扫描" class="headerlink" title="二、端口指定扫描"></a>二、端口指定扫描</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 扫描单个端口</span><br><span class="line">nmap -p 80 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 扫描多个端口</span><br><span class="line">nmap -p 80,22,3306 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 扫描端口范围</span><br><span class="line">nmap -p 1-1000 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 扫描所有端口 1-65535</span><br><span class="line">nmap -p- 192.168.1.1</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、常用参数（渗透必备）"><a href="#三、常用参数（渗透必备）" class="headerlink" title="三、常用参数（渗透必备）"></a>三、常用参数（渗透必备）</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 1. 详细扫描过程</span><br><span class="line">nmap -v 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 2. 路由跟踪+扫描</span><br><span class="line">nmap -traceroute 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 3. 系统版本、服务版本探测</span><br><span class="line">nmap -sV 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 4. 操作系统探测</span><br><span class="line">nmap -O 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 5. 隐藏扫描（半开扫描，不完成三次握手）</span><br><span class="line">nmap -sS 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 6. 全面扫描（版本+系统+脚本）</span><br><span class="line">nmap -A 192.168.1.1</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、主机存活扫描（只看在线主机）"><a href="#四、主机存活扫描（只看在线主机）" class="headerlink" title="四、主机存活扫描（只看在线主机）"></a>四、主机存活扫描（只看在线主机）</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 仅ping扫描，不扫端口</span><br><span class="line">nmap -sn 192.168.1.0/24</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、绕过防火墙-快速扫描"><a href="#五、绕过防火墙-快速扫描" class="headerlink" title="五、绕过防火墙 &#x2F; 快速扫描"></a>五、绕过防火墙 &#x2F; 快速扫描</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 快速扫描</span><br><span class="line">nmap -T4 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 超强激进扫描（速度最快）</span><br><span class="line">nmap -T5 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 随机伪装MAC、发包绕过简单防护</span><br><span class="line">nmap -D 诱饵IP 目标IP</span><br></pre></td></tr></table></figure>
+
+<h2 id="六、脚本扫描（漏洞、弱口令等）"><a href="#六、脚本扫描（漏洞、弱口令等）" class="headerlink" title="六、脚本扫描（漏洞、弱口令等）"></a>六、脚本扫描（漏洞、弱口令等）</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 使用默认脚本扫描</span><br><span class="line">nmap -sC 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 扫描常见漏洞</span><br><span class="line">nmap --script vuln 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 扫描FTP弱口令</span><br><span class="line">nmap --script ftp-brute 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 扫描SSH弱口令</span><br><span class="line">nmap --script ssh-brute 192.168.1.1</span><br></pre></td></tr></table></figure>
+
+<h2 id="七、结果保存"><a href="#七、结果保存" class="headerlink" title="七、结果保存"></a>七、结果保存</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 普通文本保存</span><br><span class="line">nmap 192.168.1.1 -oN result.txt</span><br><span class="line"></span><br><span class="line"># 保存为xml（可导入其他工具）</span><br><span class="line">nmap 192.168.1.1 -oX result.xml</span><br></pre></td></tr></table></figure>
+
+<h2 id="八、常用组合命令（实战常用）"><a href="#八、常用组合命令（实战常用）" class="headerlink" title="八、常用组合命令（实战常用）"></a>八、常用组合命令（实战常用）</h2><p>bash</p>
+<p>运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 网段存活+端口+版本全扫</span><br><span class="line">nmap -sn -sV 192.168.1.0/24</span><br><span class="line"></span><br><span class="line"># 全端口+版本+系统+详细信息</span><br><span class="line">nmap -p- -sV -O -v 192.168.1.1</span><br><span class="line"></span><br><span class="line"># 漏洞一键扫描</span><br><span class="line">nmap -T4 --script vuln 192.168.1.1</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2026/05/07/nmap/" data-id="cuidhJ61ZGeLv0anq1dW-dBxu" data-title="" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-mysql注入" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2026/04/28/mysql%E6%B3%A8%E5%85%A5/" class="article-date">
@@ -153,7 +212,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/04/28/mysql%E6%B3%A8%E5%85%A5/" data-id="cuidts4OfFNsLFCX7K2It0SgM" data-title="" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2026/04/28/mysql%E6%B3%A8%E5%85%A5/" data-id="cuid4LpjU-E-vf0cmFpNMS75G" data-title="" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -200,7 +259,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/04/28/xff%E6%B3%A8%E5%85%A5/" data-id="cuid-HLeonygo4Y67DAjIhPL9" data-title="" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2026/04/28/xff%E6%B3%A8%E5%85%A5/" data-id="cuidFXOMzbbSP5PxF-dmtC0z7" data-title="" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -414,7 +473,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/04/27/markdown/" data-id="cuidhmVW8UK3eETuuf4rEsIdD" data-title="Markdown 语法基础" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2026/04/27/markdown/" data-id="cuidz9OWoIF_bKNzTk1zHFTF0" data-title="Markdown 语法基础" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -605,7 +664,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/04/27/php/" data-id="cuid7kOjjF3hNoL3VXd07Swr1" data-title="php 语法基础" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2026/04/27/php/" data-id="cuideZB6Ip9r15vUvTo2hKQ0T" data-title="php 语法基础" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -706,7 +765,7 @@
 <p>SELECT 字段 FROM 表名 GROUP BY 字段;</p>
 <p><em><strong>内连接</strong></em></p>
 <p>SELECT * FROM 表1<br>JOIN 表2 ON 表1.id &#x3D; 表2.id;</p>
-<p>– 插入数据（加了email字段）<br>INSERT INTO users (username,password,email)<br>VALUES (‘newuser’,’123456’,‘<a href="mailto:&#116;&#x65;&#115;&#116;&#x40;&#113;&#113;&#x2e;&#99;&#x6f;&#x6d;">test@qq.com</a>‘);</p>
+<p>– 插入数据（加了email字段）<br>INSERT INTO users (username,password,email)<br>VALUES (‘newuser’,’123456’,‘<a href="mailto:&#x74;&#101;&#x73;&#116;&#64;&#113;&#113;&#46;&#x63;&#111;&#x6d;">test@qq.com</a>‘);</p>
 <ul>
 <li><p>查询数据<br>SELECT * FROM users WHERE username&#x3D;’admin’;</p>
 </li>
@@ -719,7 +778,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/04/12/mysql/" data-id="cuidlH4kTIG51P4PQnCn2hkfN" data-title="mysql" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2026/04/12/mysql/" data-id="cuidzS3WVdG7C4_rBIXcxJpf1" data-title="mysql" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -772,7 +831,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/04/01/hello-world/" data-id="cuidbc7onY-MiF-De5iyEzNsp" data-title="Hello World" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2026/04/01/hello-world/" data-id="cuidY-utI4DLjinCN61TzYxmG" data-title="Hello World" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -984,7 +1043,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/02/01/linxu/" data-id="cuidWQDo2QmVcQNZc8sObC3-S" data-title="Linux基础操作" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2025/02/01/linxu/" data-id="cuidDda4mNEaXX2SAsb6skRcV" data-title="Linux基础操作" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
@@ -1037,7 +1096,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">四月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">五月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">四月 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a></li></ul>
     </div>
   </div>
 
@@ -1048,6 +1107,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2026/05/07/nmap/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2026/04/28/mysql%E6%B3%A8%E5%85%A5/">(no title)</a>
@@ -1063,10 +1126,6 @@
         
           <li>
             <a href="/2026/04/27/php/">php 语法基础</a>
-          </li>
-        
-          <li>
-            <a href="/2026/04/12/mysql/">mysql</a>
           </li>
         
       </ul>
