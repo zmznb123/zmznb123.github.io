@@ -4,18 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>钟民的个人博客</title>
+  <title>mysql | 钟民的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="MySQL 注入漏洞学习笔记📌 1. 注入基础1.1 注入原理12345-- 原始查询SELECT * FROM users WHERE username &#x3D; &#x27;$user&#x27; AND password &#x3D; &#x27;$pass&#x27;-- 注入后SELECT * FROM users WHERE username &#x3D; &#x27;admin&#x27; OR &amp;#x27">
 <meta property="og:type" content="article">
-<meta property="og:title" content="钟民的个人博客">
+<meta property="og:title" content="mysql">
 <meta property="og:url" content="http://example.com/2026/04/28/mysql%E6%B3%A8%E5%85%A5/index.html">
 <meta property="og:site_name" content="钟民的个人博客">
 <meta property="og:description" content="MySQL 注入漏洞学习笔记📌 1. 注入基础1.1 注入原理12345-- 原始查询SELECT * FROM users WHERE username &#x3D; &#x27;$user&#x27; AND password &#x3D; &#x27;$pass&#x27;-- 注入后SELECT * FROM users WHERE username &#x3D; &#x27;admin&#x27; OR &amp;#x27">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-04-28T15:50:20.122Z">
-<meta property="article:modified_time" content="2026-04-28T15:51:07.767Z">
+<meta property="article:modified_time" content="2026-05-08T11:54:23.787Z">
 <meta property="article:author" content="zmdclj">
+<meta property="article:tag" content="mysql注入漏洞的学习">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="钟民的个人博客" type="application/atom+xml">
@@ -87,6 +88,16 @@
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      mysql
+    </h1>
+  
+
+      </header>
+    
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h1 id="MySQL-注入漏洞学习笔记"><a href="#MySQL-注入漏洞学习笔记" class="headerlink" title="MySQL 注入漏洞学习笔记"></a>MySQL 注入漏洞学习笔记</h1><h2 id="📌-1-注入基础"><a href="#📌-1-注入基础" class="headerlink" title="📌 1. 注入基础"></a>📌 1. 注入基础</h2><h3 id="1-1-注入原理"><a href="#1-1-注入原理" class="headerlink" title="1.1 注入原理"></a>1.1 注入原理</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 原始查询</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> username <span class="operator">=</span> <span class="string">&#x27;$user&#x27;</span> <span class="keyword">AND</span> password <span class="operator">=</span> <span class="string">&#x27;$pass&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 注入后</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> username <span class="operator">=</span> <span class="string">&#x27;admin&#x27;</span> <span class="keyword">OR</span> <span class="string">&#x27;1&#x27;</span><span class="operator">=</span><span class="string">&#x27;1&#x27;</span> <span class="comment">-- &#x27; AND password = &#x27;xxx&#x27;</span></span><br></pre></td></tr></table></figure>
@@ -153,10 +164,12 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/04/28/mysql%E6%B3%A8%E5%85%A5/" data-id="cuid4LpjU-E-vf0cmFpNMS75G" data-title="" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="http://example.com/2026/04/28/mysql%E6%B3%A8%E5%85%A5/" data-id="cuidVPrtIBRrhppHsyefeLWkR" data-title="mysql" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%AD%A6%E4%B9%A0/" rel="tag">mysql注入漏洞的学习</a></li></ul>
+
     </footer>
   </div>
   
@@ -167,7 +180,7 @@
       <strong class="article-nav-caption">前一篇</strong>
       <div class="article-nav-title">
         
-          (no title)
+          nmap
         
       </div>
     </a>
@@ -202,7 +215,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="tag">学习记录</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%AD%A6%E4%B9%A0/" rel="tag">mysql注入漏洞的学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="tag">学习记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="tag">工具的使用</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E8%A8%80%E7%B1%BB%E7%9A%84%E5%AD%A6%E4%B9%A0/" rel="tag">语言类的学习</a></li></ul>
     </div>
   </div>
 
@@ -212,7 +225,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" style="font-size: 10px;">学习记录</a>
+      <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/mysql%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">mysql注入漏洞的学习</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" style="font-size: 10px;">学习记录</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" style="font-size: 10px;">工具的使用</a> <a href="/tags/%E8%AF%AD%E8%A8%80%E7%B1%BB%E7%9A%84%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">语言类的学习</a>
     </div>
   </div>
 
@@ -234,11 +247,15 @@
       <ul>
         
           <li>
-            <a href="/2026/05/07/nmap/">(no title)</a>
+            <a href="/2026/05/08/java%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">java</a>
           </li>
         
           <li>
-            <a href="/2026/04/28/mysql%E6%B3%A8%E5%85%A5/">(no title)</a>
+            <a href="/2026/05/07/nmap/">nmap</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/28/mysql%E6%B3%A8%E5%85%A5/">mysql</a>
           </li>
         
           <li>
@@ -247,10 +264,6 @@
         
           <li>
             <a href="/2026/04/27/markdown/">Markdown 语法基础</a>
-          </li>
-        
-          <li>
-            <a href="/2026/04/27/php/">php 语法基础</a>
           </li>
         
       </ul>
