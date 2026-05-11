@@ -1,5 +1,214 @@
-extends includes/layout.pug
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>钟民的个人博客 - 网络安全技术的分享与日常</title><meta name="author" content="zmdclj"><meta name="copyright" content="zmdclj"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="分享编程，网络安全技术">
+<meta property="og:type" content="website">
+<meta property="og:title" content="钟民的个人博客">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="钟民的个人博客">
+<meta property="og:description" content="分享编程，网络安全技术">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/butterfly-icon.png">
+<meta property="article:author" content="zmdclj">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "钟民的个人博客",
+  "alternateName": [
+    "网络安全技术的分享与日常",
+    "example.com"
+  ],
+  "url": "http://example.com/"
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.5-b1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
 
-block content
-  include ./includes/mixins/indexPostUI.pug
-  +indexPostUI
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '钟民的个人博客',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="bg-animation" id="web_bg"></div><script>(() => {
+  const arr = ["background-image: url(/img/ackground.jpg);"]
+  const webBgDiv = document.getElementById('web_bg')
+
+  const setRandomBg = () => {
+    webBgDiv.style = arr[Math.floor(Math.random() * arr.length)]
+    requestAnimationFrame(() => webBgDiv.classList.add('bg-animation'))
+  }
+
+  document.addEventListener('pjax:send', () => {
+    webBgDiv.style = ''
+    webBgDiv.classList.remove('bg-animation')
+  })
+
+  document.addEventListener('pjax:complete', setRandomBg)
+  document.addEventListener('DOMContentLoaded', setRandomBg)
+})()
+</script><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">钟民的个人博客</span></a></span><div id="menus"></div></nav><div id="site-info"><h1 id="site-title">钟民的个人博客</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/2026/05/08/java%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="java"><img class="post-bg" src="/img/mn.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/05/08/java%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="java">java</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-05-08T11:49:35.714Z" title="发表于 2026-05-08 19:49:35">2026-05-08</time></span></div><div class="content">一、Java 入门基础1. Java 程序结构java 运行 1234567891011121314// 1. 包声明（可选）package com.demo;// 2. 导入类（可选）import java.util.Scanner;// 3. 类声明（一个Java文件只能有一个public类，类名=文件名）public class HelloWorld &#123;    // 4. 主方法：程序入口（固定写法）    public static void main(String[] args) &#123;        // 5. 执行语句        System.out.println(&quot;Hello Java!&quot;); // 输出并换行    &#125;&#125;  2. 基础规则 大小写敏感：Hello 和 hello 是不同的  类名规范：大驼峰（HelloWorld）  方法名规范：小驼峰（sayHello）  语句结束：必须以 ; 结尾  注释： java 运行 123// 单行注释/* 多行注释 *//** 文档注释（可生成API） ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/05/07/nmap/" title="nmap"><img class="post-bg" src="/img/mn.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="nmap"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/05/07/nmap/" title="nmap">nmap</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-05-07T14:05:09.135Z" title="发表于 2026-05-07 22:05:09">2026-05-07</time></span></div><div class="content">Nmap Linux一、基础扫描bash 运行 1234567891011# 1. 单IP默认端口扫描nmap 192.168.1.1# 2. 扫描多个IPnmap 192.168.1.1 192.168.1.2# 3. 扫描网段nmap 192.168.1.0/24# 4. 扫描IP范围nmap 192.168.1.1-50  二、端口指定扫描bash 运行 1234567891011# 扫描单个端口nmap -p 80 192.168.1.1# 扫描多个端口nmap -p 80,22,3306 192.168.1.1# 扫描端口范围nmap -p 1-1000 192.168.1.1# 扫描所有端口 1-65535nmap -p- 192.168.1.1  三、常用参数（渗透必备）bash 运行 1234567891011121314151617# 1. 详细扫描过程nmap -v 192.168.1.1# 2. 路由跟踪+扫描nmap -traceroute 192.168.1.1# 3. 系统版本、服务版本探测nmap -sV 192.168.1.1# 4. 操作系统探测...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2026/04/28/mysql%E6%B3%A8%E5%85%A5/" title="mysql"><img class="post-bg" src="/img/mn.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="mysql"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/04/28/mysql%E6%B3%A8%E5%85%A5/" title="mysql">mysql</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-04-28T15:50:20.122Z" title="发表于 2026-04-28 23:50:20">2026-04-28</time></span></div><div class="content">MySQL 注入漏洞学习笔记📌 1. 注入基础1.1 注入原理12345-- 原始查询SELECT * FROM users WHERE username = &#x27;$user&#x27; AND password = &#x27;$pass&#x27;-- 注入后SELECT * FROM users WHERE username = &#x27;admin&#x27; OR &#x27;1&#x27;=&#x27;1&#x27; -- &#x27; AND password = &#x27;xxx&#x27;  1.2 常见注入点 GET&#x2F;POST参数 HTTP头部 Cookie参数 文件上传名 搜索框  🔍 2. 检测注入2.1 布尔检测12&#x27; AND 1=1 --     # 正常显示&#x27; AND 1=2 --     # 异常/无结果  2.2 错误检测12&#x27; AND 1=1 union select 1,2,3 -- &#x27; OR 1=1 ORDER BY 1 --     # 判断列数  2.3 时间盲注12&#...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/04/28/xff%E6%B3%A8%E5%85%A5/" title="无标题"><img class="post-bg" src="/img/mn.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无标题"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/04/28/xff%E6%B3%A8%E5%85%A5/" title="无标题">无标题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-04-28T15:11:28.175Z" title="发表于 2026-04-28 23:11:28">2026-04-28</time></span></div><div class="content">xff注入测试思路 1、登录后台提示ip信息不正确，这种情况一般是x-forwarded-for读取客户端ip 2、通过在数据包添加x-forwarded-for:1.1.1.1看 respone包中是否存在1.1.1.1 3、如果存在则证明用x-forwarded-for读取客户端数据，则存在注入漏洞 4、通过在登录框数据包中添加x-forwarded-for:*，用sqlmap 跑注入,跑数据库名，表名，字段名，字段内容 测试步骤 1、登陆随意输入密码，返回提示   2、在数据包添加x-forwarded-for:1.1.1.1看 respone包中是否存在1.1.1.1     3、存在此漏洞，保存请求包到1.txt里（X-Forwarded-For值改为*）   4、使用sqlmap开始跑，   1）sqlmap爆出库名：sqlmap -r d:&#x2F;aaa.txt –db –batch   2）表名:sqlmap -r d:&#x2F;aaa.txt -D webcalender –tables –batch   3）字段：sqlmap -r d:&#x2F;aa...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2026/04/27/markdown/" title="Markdown 语法基础"><img class="post-bg" src="/img/mn.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Markdown 语法基础"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/04/27/markdown/" title="Markdown 语法基础">Markdown 语法基础</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-04-26T16:00:00.000Z" title="发表于 2026-04-27 00:00:00">2026-04-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a></span></div><div class="content">一、标题用 # 表示标题，# 数量代表标题级别，最多支持 6 级： markdown 123456# 一级标题## 二级标题### 三级标题#### 四级标题##### 五级标题###### 六级标题  效果： 一级标题二级标题三级标题四级标题五级标题六级标题 二、文本格式表格    效果 语法 示例    加粗 **内容** 或 __内容__ 加粗文本   斜体 *内容* 或 _内容_ 斜体文本   加粗 + 斜体 ***内容*** 加粗斜体   删除线 ~~内容~~ 删除线文本   行内代码 内容 行内代码    三、列表1. 无序列表用 - * + 任意一种都可以，后面加空格： markdown 123- 苹果- 香蕉- 橙子  效果：  苹果 香蕉 橙子  2. 有序列表用 数字. 表示，后面加空格，数字不影响排序（推荐按顺序写）： markdown 1231. 起床2. 洗漱3. 吃早餐  效果：  起床 洗漱 吃早餐  3. 嵌套列表子列表前面加 2-4 个空格： markdown 123456- 水果  - 苹果  - 香蕉- 蔬菜  1. 白菜  2. 萝卜  效...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/04/27/php/" title="php 语法基础"><img class="post-bg" src="/img/mn.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="php 语法基础"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/04/27/php/" title="php 语法基础">php 语法基础</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-04-26T16:00:00.000Z" title="发表于 2026-04-27 00:00:00">2026-04-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a></span></div><div class="content">一、PHP 基础入门1. 基本语法 PHP 代码以 &lt;?php 开始，?&gt; 结束，可嵌入 HTML 中 语句必须以分号 ; 结尾 单行注释：// 注释内容 多行注释：/* 注释内容 */  php 运行 1234&lt;?php// 输出内容echo &quot;Hello PHP!&quot;;?&gt;  2. 输出语句 echo：最常用，输出一个或多个字符串，无返回值 print：输出一个字符串，有返回值（效率低于 echo） print_r()：打印变量信息（适合数组 &#x2F; 对象） var_dump()：打印变量类型 + 值（调试专用）  二、变量与数据类型1. 变量规则 以 $ 符号开头，如 $name 区分大小写，不能以数字开头 弱类型语言：无需声明类型，自动转换  2. 8 种数据类型标量类型（4 种） 字符串：$str = &quot;abc&quot;; 整型：$num = 100; 浮点型：$float = 3.14; 布尔型：$bool = true / false;  复合类型（2 种） 数组：$arr = [1,2,3]; 对象：面向...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2026/04/12/mysql/" title="mysql"><img class="post-bg" src="/img/mn.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="mysql"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/04/12/mysql/" title="mysql">mysql</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-04-12T11:23:13.000Z" title="发表于 2026-04-12 19:23:13">2026-04-12</time></span></div><div class="content">数据类型：数值类型  INT(年龄，id，数量) TINYINT（状态值（0&#x2F;1），性别） BIGINT（超级大id） DECLMAL（金额，价格）（10,2）【总共十位数保留两位小数】  字符串类型  varchar（N）（手机号，姓名，地址） char(N)(固定长度，不够的补空格，短字符串（如身份证号18位，定长的编码）) text（长文本，文章内容，评论等）  时间类型  datettime(格式：‘YYY-MM-DD HH:MM:SS’记录创建时间更新时间) DATE（’YYY-MM-DD’只存日期，不存时分秒） timestamp(时效性较强的数据（自动转换时区）)  1.数据库的连接本地连接  mysql -u root -p  远程连接  mysql -h 地址 -p 端口 -u  用户名  -p  2.数据库操作查看所有库 show databases 创建库 create database 库名； 使用库 use 库名； 删除库 drop database 库名； 3.数据表操作查看所有表 show tables； 查看表结构 desc 表名； 创建...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/04/01/hello-world/" title="Hello World"><img class="post-bg" src="/img/mn.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/04/01/hello-world/" title="Hello World">Hello World</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-04-01T15:16:52.832Z" title="发表于 2026-04-01 23:16:52">2026-04-01</time></span></div><div class="content">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;  More info: Writing Run server1$ hexo server  More info: Server Generate static files1$ hexo generate  More info: Generating Deploy to remote sites1$ hexo deploy  More info: Deployment </div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2025/02/01/linxu/" title="Linux基础操作"><img class="post-bg" src="/img/mn.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux基础操作"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/01/linxu/" title="Linux基础操作">Linux基础操作</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-01T06:15:24.000Z" title="发表于 2025-02-01 14:15:24">2025-02-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/">知识点</a></span></div><div class="content"> linux主要特征 ：一切皆文件（目录、硬盘等都是文件）；硬件都在&#x2F;dev 目录，如硬盘、U盘为&#x2F;dev&#x2F;sd[a-d]； &#x2F;dev&#x2F;sr0（&#x2F;dev&#x2F;cdrom）是光驱的设备名（df命令查看），为设备文件，代表的是光驱本身，得把这个设备挂载到目录下（一般为&#x2F;mnt）(文件系统的临时挂载点)，才能对设备上的文件进行读写等操作； 不懂的命令 ：man 命令（查用法、全称），只记得关键词，可用man -k 关键词；  系统操作：1234567891011示例：root@app00:~# root    //用户名，root为超级用户@       //分隔符app00   //主机名称~       //当前所在目录，默认用户目录为~，会随着目录切换而变化，例如：（root@app00:/bin# ，当前位置在bin目录下）#       //表示当前用户是超级用户，普通用户为$，例如：（&quot;yao@app00:/root$&quot; ，表示使用用户&quot;yao&quot;访问/root...</div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">zmdclj</div><div class="author-info-description">分享编程，网络安全技术</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/08/java%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="java"><img src="/img/mn.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="java"/></a><div class="content"><a class="title" href="/2026/05/08/java%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="java">java</a><time datetime="2026-05-08T11:49:35.714Z" title="发表于 2026-05-08 19:49:35">2026-05-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/07/nmap/" title="nmap"><img src="/img/mn.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="nmap"/></a><div class="content"><a class="title" href="/2026/05/07/nmap/" title="nmap">nmap</a><time datetime="2026-05-07T14:05:09.135Z" title="发表于 2026-05-07 22:05:09">2026-05-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/28/mysql%E6%B3%A8%E5%85%A5/" title="mysql"><img src="/img/mn.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="mysql"/></a><div class="content"><a class="title" href="/2026/04/28/mysql%E6%B3%A8%E5%85%A5/" title="mysql">mysql</a><time datetime="2026-04-28T15:50:20.122Z" title="发表于 2026-04-28 23:50:20">2026-04-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/28/xff%E6%B3%A8%E5%85%A5/" title="无标题"><img src="/img/mn.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无标题"/></a><div class="content"><a class="title" href="/2026/04/28/xff%E6%B3%A8%E5%85%A5/" title="无标题">无标题</a><time datetime="2026-04-28T15:11:28.175Z" title="发表于 2026-04-28 23:11:28">2026-04-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/27/markdown/" title="Markdown 语法基础"><img src="/img/mn.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Markdown 语法基础"/></a><div class="content"><a class="title" href="/2026/04/27/markdown/" title="Markdown 语法基础">Markdown 语法基础</a><time datetime="2026-04-26T16:00:00.000Z" title="发表于 2026-04-27 00:00:00">2026-04-27</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"><span class="card-category-list-name">技术笔记</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/"><span class="card-category-list-name">知识点</span><span class="card-category-list-count">1</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E8%AF%AD%E8%A8%80%E7%B1%BB%E7%9A%84%E5%AD%A6%E4%B9%A0/" style="font-size: 1.5em; color: #99a9bf">语言类的学习</a> <a href="/tags/Markdown/" style="font-size: 1.1em; color: #999">Markdown</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" style="font-size: 1.1em; color: #999">学习记录</a> <a href="/tags/Linux/" style="font-size: 1.1em; color: #999">Linux</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" style="font-size: 1.1em; color: #999">工具的使用</a> <a href="/tags/mysql%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">mysql注入漏洞的学习</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/05/">
+            <span class="card-archive-list-date">
+              五月 2026
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/04/">
+            <span class="card-archive-list-date">
+              四月 2026
+            </span>
+            <span class="card-archive-list-count">6</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/02/">
+            <span class="card-archive-list-date">
+              二月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">9</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-05-11T11:27:06.183Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By zmdclj</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5-b1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.5-b1"></script><script src="/js/main.js?v=5.5.5-b1"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
